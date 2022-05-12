@@ -3,12 +3,11 @@ const router = express.Router();
 const orderController = require('../controllers/order');
 
 router.get('/', orderController.getOrdersByKeys);
-router.post('/status', orderController.updateStatusAll);
-router.post('/manage-order/reject', orderController.rejectAll);
-router.patch('/:id', orderController.updateStatus);
-
-router.get('/top-food', orderController.getTopOrderedFood);
+router.get('/top-food', orderController.getTopOrderedFoods);
 
 router.post('/', orderController.createOrder);
+
+router.post('/status', orderController.updateStatusAll);
+router.patch('/:id', orderController.updateStatus);
 
 module.exports = router;

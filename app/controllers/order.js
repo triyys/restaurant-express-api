@@ -30,22 +30,16 @@ const updateStatusAll = function(req, res, next){
         .catch(next);
 }
 
-// [POST] /order/manage-order/reject
-const rejectAll = function(req, res, next){
-    OrderModel.updateMany({ status: req.body.status }, { status: 'Đã từ chối' })
-        .then(() => res.send('Reject all successfully'))
-        .catch(next);
-}
-
-// [GET] /order/top-food
-const getTopOrderedFood = function(req, res, next) {
+// [GET] /order/top-food?
+const getTopOrderedFoods = function(req, res, next) {
+    const { count } = req.query
     OrderModel
         .aggregate()
         .project({_id: 0, items: 1})
         .unwind('items')
         .group({_id: "$items.name", orderCount: {$sum: 1}})
         .sort('-orderCount')
-        .limit(8)
+        .limit(parseInt(count))
         .then(topOrderedFoods => {
             const foodCallbacks = [];
             topOrderedFoods.forEach(topOrderedFood => {
@@ -71,6 +65,5 @@ module.exports = {
     getOrdersByKeys,
     updateStatus,
     updateStatusAll,
-    rejectAll,
-    getTopOrderedFood,
+    getTopOrderedFoods,
 }
