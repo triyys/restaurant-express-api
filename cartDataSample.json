@@ -1,0 +1,95 @@
+[
+    {
+        "_id": "618eb8bfc195fbd6f3d8983d",
+        "name": "Cánh gà rán",
+        "price": 25000,
+        "discount": "0",
+        "imageUrls": [
+            "https://ameovat.com/wp-content/uploads/2016/05/cach-lam-ga-ran.jpg",
+            "https://cdn.tgdd.vn/2020/12/CookProduct/2-1200x676-1.jpg"
+        ],
+        "options": [
+            {
+                "_id": "618eb1edc195fbd6f3cf8195",
+                "name": "Độ cay",
+                "isMultiSelect": false,
+                "items": [
+                    {
+                        "name": "Cực cay",
+                        "price": 0
+                    },
+                    {
+                        "name": "Cay vừa",
+                        "price": 0
+                    },
+                    {
+                        "name": "Cay nhẹ",
+                        "price": 0
+                    },
+                    {
+                        "name": "Không cay",
+                        "price": 0
+                    }
+                ]
+            },
+            {
+                "_id": "61925ba5835f61e2f1d80832",
+                "name": "Chọn nước",
+                "isMultiSelect": false,
+                "items": [
+                    {
+                        "name": "Pepsi",
+                        "price": 0
+                    },
+                    {
+                        "name": "Fanta",
+                        "price": 0
+                    },
+                    {
+                        "name": "Sprite",
+                        "price": 0
+                    },
+                    {
+                        "name": "Trà đào",
+                        "price": 10000
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "_id": "619229f1792fa260bd3a1003",
+        "name": "Đùi gà rán",
+        "price": 25000,
+        "discount": "0",
+        "imageUrls": [
+            "https://ameovat.com/wp-content/uploads/2016/05/cach-lam-ga-ran.jpg",
+            "https://cdn.tgdd.vn/2020/12/CookProduct/2-1200x676-1.jpg"
+        ],
+        "options": [
+            {
+                "_id": "618eb1edc195fbd6f3cf8195",
+                "name": "Độ cay",
+                "isMultiSelect": false,
+                "items": [
+                    {
+                        "name": "Cực cay",
+                        "price": 0
+                    },
+                    {
+                        "name": "Cay vừa",
+                        "price": 0
+                    },
+                    {
+                        "name": "Cay nhẹ",
+                        "price": 0
+                    },
+                    {
+                        "name": "Không cay",
+                        "price": 0
+                    }
+                ]
+            }
+        ]
+    }
+]
