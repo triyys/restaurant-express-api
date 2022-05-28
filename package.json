@@ -1,13 +1,13 @@
 {
   "name": "event-management",
   "version": "1.0.0",
-  "description": "Đồ án cpnm",
-  "main": "server.js",
+  "description": "Restaurant express api",
+  "main": "index.js",
   "scripts": {
-    "start": "nodemon --inspect server.js",
+    "start": "nodemon --inspect index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "phucvinh",
+  "author": "triyys",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
