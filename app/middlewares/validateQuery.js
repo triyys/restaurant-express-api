@@ -1,15 +1,15 @@
 /**
  * Validation middleware for checking the missing fields
- * @param {Array} fields Fields to validate
+ * @param {Array<string>} fields Fields to validate
  * @returns A middleware callback function
  */
 const validateQuery = (fields) => {
     return (req, res, next) => {
-        fields.forEach((field) => {
+        for (const field of fields) {
             if (!req.query[field]) {
-                res.status(400).send(`${field} is missing`)
+                return res.status(400).send(`${field} is missing`)
             }
-        })
+        }
         next()
     }
 }
