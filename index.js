@@ -16,6 +16,11 @@ app.use(express.json());
 // Routes init
 route(app);
 
+app.use((error, req, res, next) => {
+    console.log(`Caught the error: ${error}`)
+    return res.status(400).send(error.toString())
+})
+
 db.connect();
 
 const PORT = process.env.PORT || 8080;

@@ -39,7 +39,7 @@ const getTopOrderedFoods = function(req, res, next) {
         .unwind('items')
         .group({_id: "$items.name", orderCount: {$sum: 1}})
         .sort('-orderCount')
-        .limit(count ? parseInt(count) : 8)
+        .limit(parseInt(count))
         .then(topOrderedFoods => {
             const foodCallbacks = []
             topOrderedFoods.forEach(topOrderedFood => {

@@ -1,13 +1,20 @@
-const express = require('express');
-const router = express.Router();
-const orderController = require('../controllers/order');
+const express = require('express')
+const router = express.Router()
+const {
+    getOrdersByKeys,
+    getTopOrderedFoods,
+    createOrder,
+    updateStatus,
+    updateStatusAll,
+} = require('../controllers/order')
+const { validateQuery } = require('../middlewares')
 
-router.get('/', orderController.getOrdersByKeys);
-router.get('/top-food', orderController.getTopOrderedFoods);
+router.get('/', getOrdersByKeys)
+router.get('/top-food', validateQuery(['count']), getTopOrderedFoods)
 
-router.post('/', orderController.createOrder);
+router.post('/', createOrder)
 
-router.post('/status', orderController.updateStatusAll);
-router.patch('/:id', orderController.updateStatus);
+router.post('/status', updateStatusAll)
+router.patch('/:id', updateStatus)
 
-module.exports = router;
+module.exports = router
