@@ -25,12 +25,27 @@ const updateStatus = function(req, res, next){
 
 // [POST] /order/status
 const updateStatusAll = function(req, res, next){
-    OrderModel.updateMany({ status: req.body.statusCurr }, { status: req.body.statusUpdate })
-        .then(() => res.send('Accept all successfully'))
+    const { selectedStatus, newStatus } = req.body
+    OrderModel
+        .updateMany({ status: selectedStatus }, { status: newStatus })
+        .then((result) => {
+            const {
+                acknowledged,
+                modifiedCount,
+                matchedCount
+            } = result
+            const message = matchedCount > 0 ? `${modifiedCount} document(s) updated` : 'No documents found'
+            return res
+                .status(200)
+                .send({
+                    status: acknowledged,
+                    message,
+                })
+        })
         .catch(next)
 }
 
-// [GET] /order/top-food?
+// [GET] /order/top-food?count={int}
 const getTopOrderedFoods = function(req, res, next) {
     const { count } = req.query
     OrderModel

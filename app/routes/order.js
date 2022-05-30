@@ -7,14 +7,18 @@ const {
     updateStatus,
     updateStatusAll,
 } = require('../controllers/order')
-const { validateQuery } = require('../middlewares')
+const { validateQuery, validateRequestBody } = require('../middlewares')
 
 router.get('/', getOrdersByKeys)
 router.get('/top-food', validateQuery(['count']), getTopOrderedFoods)
 
 router.post('/', createOrder)
 
-router.post('/status', updateStatusAll)
+router.post(
+    '/status',
+    validateRequestBody(['selectedStatus', 'newStatus']),
+    updateStatusAll
+)
 router.patch('/:id', updateStatus)
 
 module.exports = router
