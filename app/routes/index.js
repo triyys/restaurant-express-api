@@ -1,17 +1,15 @@
-const bannerRouter = require('./banners')
+const bannersRouter = require('./banners')
 const cartRouter = require('./cart')
-const foodRouter = require('./food')
+const foodsRouter = require('./foods')
 const loginRouter = require('./login')
-const optionsRouter = require('./option')
 const ordersRouter = require('./orders')
 const paymentRouter = require('./payment')
 
 function route(app) {
-    app.use('/banners', bannerRouter)
+    app.use('/banners', bannersRouter)
     app.use('/cart', cartRouter)
-    app.use('/food', foodRouter)
+    app.use('/foods', foodsRouter)
     app.use('/login', loginRouter)
-    app.use('/options', optionsRouter)
     app.use('/orders', ordersRouter)
     app.use('/payment', paymentRouter)
 }
