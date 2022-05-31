@@ -1,51 +1,68 @@
 const OrderModel = require('../models/OrderModel')
 const FoodModel = require('../models/FoodModel')
 
+// [POST] /orders
 const createOrder = function(req, res, next) {
     OrderModel.create(req.body)
-        .then(() => res.send('LƯU ORDER: ', req.body))
-        .catch(next)
-}
-
-// [GET] /order?
-const getOrdersByKeys = function(req, res, next){
-    OrderModel.find(req.query)
-        .then(orders => res.status(200).send(orders))
-        .catch(next)
-}
-
-// [PATCH] /order/:id
-const updateStatus = function(req, res, next){
-    const { status } = req.body
-
-    OrderModel.findByIdAndUpdate({ _id: req.params.id }, { status })
-        .then(() => res.send('Update successfully'))
-        .catch(next)
-}
-
-// [POST] /order/status
-const updateStatusAll = function(req, res, next){
-    const { selectedStatus, newStatus } = req.body
-    OrderModel
-        .updateMany({ status: selectedStatus }, { status: newStatus })
-        .then((result) => {
-            const {
-                acknowledged,
-                modifiedCount,
-                matchedCount
-            } = result
-            const message = matchedCount > 0 ? `${modifiedCount} document(s) updated` : 'No documents found'
-            return res
-                .status(200)
-                .send({
-                    status: acknowledged,
-                    message,
-                })
+        .then((order) => {
+            const result = {
+                status: true,
+                message: `Order ${order._id} is created`,
+            }
+            console.log(result)
+            return res.status(200).send(result)
         })
         .catch(next)
 }
 
-// [GET] /order/top-food?count={int}
+// [GET] /orders?
+const getOrdersByKeys = function(req, res, next){
+    OrderModel.find(req.query)
+        .then((orders) => {
+            return res.status(200).send(orders)
+        })
+        .catch(next)
+}
+
+// [PATCH] /orders/:id
+const updateStatus = function(req, res, next){
+    const { id } = req.params
+    const { status } = req.body
+
+    OrderModel.findByIdAndUpdate({ _id: id }, { status })
+        .then(() => {
+            const result = {
+                status: true,
+                message: `Order ${id} is updated`,
+            }
+            console.log(result)
+            return res.status(200).send(result)
+        })
+        .catch(next)
+}
+
+// [POST] /orders/status
+const updateStatusAll = function(req, res, next){
+    const { selectedStatus, newStatus } = req.body
+    OrderModel
+        .updateMany({ status: selectedStatus }, { status: newStatus })
+        .then((data) => {
+            const {
+                acknowledged,
+                modifiedCount,
+                matchedCount,
+            } = data
+            const result = {
+                status: acknowledged,
+                message: matchedCount > 0 ? `${modifiedCount} document(s) updated` : 'No documents found',
+            }
+            console.log(result)
+            return res.status(200).send(result)
+        })
+        .catch(next)
+}
+
+// [GET] /orders/top-food?count={int}
 const getTopOrderedFoods = function(req, res, next) {
     const { count } = req.query
     OrderModel

@@ -3,7 +3,7 @@ const cartRouter = require('./cart');
 const foodRouter = require('./food');
 const loginRouter = require('./login');
 const optionsRouter = require('./option');
-const orderRouter = require('./order');
+const ordersRouter = require('./orders');
 const paymentRouter = require('./payment');
 
 function route(app) {
@@ -12,7 +12,7 @@ function route(app) {
     app.use('/food', foodRouter);
     app.use('/login', loginRouter);
     app.use('/options', optionsRouter);
-    app.use('/order', orderRouter);
+    app.use('/orders', ordersRouter);
     app.use('/payment', paymentRouter);
 }
 
