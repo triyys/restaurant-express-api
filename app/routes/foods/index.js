@@ -10,13 +10,14 @@ const {
 } = require('../../controllers/food')
 const optionsRouter = require('./options')
 
-router.get('/:id', getFoodById)
-router.get('/detail/:id', getFoodDetailById)
-router.get('/', getAllFood)
-router.post('/new', createFood)
-router.put('/:id', updateFood)
-router.delete('/:id', deleteFood)
 
 router.use('/options', optionsRouter)
+
+router.get('/', getAllFood)
+router.get('/:id', getFoodById)
+router.get('/detail/:id', getFoodDetailById)
+router.post('/', createFood)
+router.put('/:id', updateFood)
+router.delete('/:id', deleteFood)
 
 module.exports = router
