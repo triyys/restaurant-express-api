@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
-const Schema = mongoose.Schema;
+const Schema = mongoose.Schema
 
 const Banner = new Schema({
     imageUrls: [String]
@@ -9,6 +9,6 @@ const Banner = new Schema({
         createdAt: true,
         updatedAt: false,
     },
-});
+})
 
-module.exports = mongoose.model('banners', Banner);
+module.exports = mongoose.model('banners', Banner)

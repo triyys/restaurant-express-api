@@ -1,4 +1,4 @@
-const EmployeeModel = require('../models/EmployeeModel');
+const EmployeeModel = require('../models/EmployeeModel')
 
 const checkLogin = function(req, res) {
     EmployeeModel.findOne({
@@ -7,11 +7,11 @@ const checkLogin = function(req, res) {
     })
         .then(account => {
             if (account) {
-                res.send('Accept');
+                res.send('Accept')
             } else {
-                res.send('Reject');
+                res.send('Reject')
             }
-        });
+        })
 }
 
 module.exports = {

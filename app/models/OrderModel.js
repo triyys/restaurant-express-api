@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
-const Schema = mongoose.Schema;
+const Schema = mongoose.Schema
 
 const Order = new Schema({
     customerInfo: {
@@ -26,6 +26,6 @@ const Order = new Schema({
         createdAt: true,
         updatedAt: false
     }
-});
+})
 
-module.exports = mongoose.model('orders', Order);
+module.exports = mongoose.model('orders', Order)

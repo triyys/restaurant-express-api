@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
-const Schema = mongoose.Schema;
+const Schema = mongoose.Schema
 
 const Option = new Schema({
     name: String,
@@ -9,6 +9,6 @@ const Option = new Schema({
         name: String,
         price: Number,
     }],
-});
+})
 
-module.exports = mongoose.model('options', Option);
+module.exports = mongoose.model('options', Option)

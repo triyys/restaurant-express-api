@@ -1,4 +1,4 @@
-var paypal = require('paypal-rest-sdk');
+var paypal = require('paypal-rest-sdk')
 paypal.configure({
     'mode': 'sandbox', //sandbox or live
     // 'client_id': 'EBWKjlELKMYqRNQ6sYvFo64FtaRLRR5BdHEESmha49TM',
@@ -8,9 +8,9 @@ paypal.configure({
 })
 
 const processPayment = (req, res) => {
-    console.log("Process Info");
-    console.log(req.body.amount);
-    console.log(req.body.description);
+    console.log("Process Info")
+    console.log(req.body.amount)
+    console.log(req.body.description)
     const create_payment_json = {
         "intent": "sale",
         "payer": {
@@ -36,45 +36,45 @@ const processPayment = (req, res) => {
             },
             "description": req.body.description
         }]
-    };
+    }
 
     paypal.payment.create(create_payment_json, function (error, payment) {
         if (error) {
-            console.log(error);
-            res.redirect("http://localhost:3000/payment/fail");
+            console.log(error)
+            res.redirect("http://localhost:3000/payment/fail")
         } else {
             for (let i = 0; i < payment.links.length; i++) {
                 if (payment.links[i].rel === 'approval_url') {
-                    res.send(payment.links[i].href);
+                    res.send(payment.links[i].href)
                 }
             }
         }
-    });
+    })
 }
 
 const successPayment = (req, res) => {
-    const payerId = req.query.PayerID;
-    const paymentId = req.query.paymentId;
+    const payerId = req.query.PayerID
+    const paymentId = req.query.paymentId
 
     const execute_payment_json = {
         "payer_id": payerId,
-    };
+    }
 
     // Obtains the transaction details from paypal
     paypal.payment.execute(paymentId, execute_payment_json, function (error, payment) {
         //When error occurs when due to non-existent transaction, throw an error else log the transaction details in the console then send a Success string reposponse to the user.
         if (error) {
-            console.log(error.response);
+            console.log(error.response)
             res.status(500).send("Something wrong have occured, please try again")
         } else {
-            console.log(JSON.stringify(payment));
-            res.redirect("http://localhost:3000/success");
+            console.log(JSON.stringify(payment))
+            res.redirect("http://localhost:3000/success")
         }
-    });
+    })
 }
 
 const cancelPayment = (req, res) => {
-    res.redirect("https://www.paypal.com/us/home");
+    res.redirect("https://www.paypal.com/us/home")
 }
 
 module.exports = {
