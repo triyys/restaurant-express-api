@@ -18,7 +18,7 @@ route(app)
 
 app.use((error, req, res, next) => {
     console.log(`Caught the error: ${error}`)
-    return res.status(400).send(error.toString())
+    return res.status(500).send(error.toString())
 })
 
 db.connect()

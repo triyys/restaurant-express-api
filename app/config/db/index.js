@@ -1,9 +1,9 @@
 const mongoose = require('mongoose')
 
 const user = 'admin'
-const password = 'CRlQNnlWX3cByBkG'
+const password = 'admin'
 
-const uri = `mongodb+srv://${user}:${password}@restaurantpos.mjkgg.mongodb.net/RestaurantPOS?retryWrites=true&w=majority`
+const uri = `mongodb+srv://${user}:${password}@cluster0.cvwi8c5.mongodb.net/RestaurantPOS?retryWrites=true&w=majority`
 
 async function connect() {
     try {
