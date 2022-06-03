@@ -1,6 +1,5 @@
 const FoodModel = require('../models/FoodModel')
 const OptionModel = require('../models/OptionModel')
-const ObjectId = require('mongoose').Types.ObjectId
 
 // [GET] /foods/:id
 const getFoodById = (req, res, next) => {
@@ -70,31 +69,33 @@ const createFood = (req, res, next) => {
         .catch(next)
 }
 
-const updateFood = async function (req, res) {
-    const foodId = req.params.id
-    const foodData = req.body
-    const optionIds = foodData.optionIds.map(value => new ObjectId(value))
-
-    const newFood = { ...foodData, optionIds: optionIds, discount: foodData.discount + '%' }
-
-    try {
-        await FoodModel.findByIdAndUpdate(foodId, { $set: newFood })
-        res.send({ msg: 'UPDATED OK' })
-    } catch (err) {
-        console.log(err)
-        res.status(500).send({ msg: 'INTERAL SERVER ERROR' })
-    }
+// [PUT] /foods/:id
+const updateFood = (req, res, next) => {
+    const { id } = req.params
+    FoodModel.findByIdAndUpdate(id, { $set: req.body })
+        .then(() => {
+            const result = {
+                status: true,
+                message: `Food ${id} is updated`,
+            }
+            console.log(result)
+            return res.status(200).send(result)
+        })
+        .catch(next)
 }
 
-const deleteFood = async function(req, res) {
-    const foodId = req.params.id
-    try {
-        await FoodModel.findByIdAndDelete(foodId)
-        res.send({ msg: 'DELETED OK' })
-    } catch (err) {
-        console.log(err)
-        res.status(500).send({ msg: 'INTERAL SERVER ERROR' })
-    }
+// [DELETE] /foods/:id
+const deleteFood = (req, res, next) => {
+    const { id } = req.params
+    FoodModel.findByIdAndDelete(id)
+        .then(() => {
+            const result = {
+                status: true,
+                message: `Food ${id} is deleted`,
+            }
+            return res.status(200).send(result)
+        })
+        .catch(next)
 }
 
 // [GET] /foods/options
