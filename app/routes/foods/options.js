@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
-const { getOptions } = require('../../controllers/food')
+const { getAllOptions } = require('../../controllers/food')
 
-router.get('/', getOptions)
+router.get('/', getAllOptions)
 
 module.exports = router
