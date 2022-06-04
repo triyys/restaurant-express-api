@@ -1,18 +1,14 @@
 const FoodModel = require('../models/FoodModel')
 const OptionModel = require('../models/OptionModel')
+const { getMongoDocById } = require('../utils')
 
 // [GET] /foods/:id
-const getFoodById = (req, res, next) => {
-    FoodModel.findById(req.params.id)
-        .then((food) => {
-            return res.status(200).send(food)
-        })
-        .catch(next)
-}
+const getFoodById = getMongoDocById(FoodModel)
 
-const getFoodDetailById = async function (req, res) {
-    const { id: foodId } = req.params
-    var food = await FoodModel.findById(foodId)
+const getFoodDetailById = async (req, res) => {
+    const { id } = req.params
+    var food = await FoodModel.findById(id)
+    // console.log(food);
     food = food.toObject()
     food.orderOptions = []
     for (let i = 0; i < food.optionIds.length; i++) {
@@ -107,6 +103,9 @@ const getAllOptions = (req, res, next) => {
         .catch(next)
 }
 
+// [GET] /foods/options/:id
+const getOptionById = getMongoDocById(OptionModel)
+
 module.exports = {
     getFoodById,
     getFoodDetailById,
@@ -116,4 +115,5 @@ module.exports = {
     updateFood,
     deleteFood,
     getAllOptions,
+    getOptionById,
 }
