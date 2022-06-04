@@ -1,22 +1,11 @@
 const BannerModel = require('../models/BannerModel')
+const { getMongoDocById, getMongoCollection } = require('../utils')
 
 // [GET] /banners/:id
-const getBannerById = (req, res, next) => {
-    BannerModel.findById(req.params.id)
-        .then((banner) => {
-            return res.status(200).send(banner)
-        })
-        .catch(next)
-}
+const getBannerById = getMongoDocById(BannerModel)
 
 // [GET] /banners
-const getAllBanners = (req, res, next) => {
-    BannerModel.find()
-        .then((banners) => {
-            return res.status(200).send(banners)
-        })
-        .catch(next)
-}
+const getAllBanners = getMongoCollection(BannerModel)
 
 // [POST] /banners
 const createBanner = (req, res, next) => {
