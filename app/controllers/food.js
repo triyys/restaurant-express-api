@@ -5,41 +5,46 @@ const { getMongoDocById } = require('../utils')
 // [GET] /foods/:id
 const getFoodById = getMongoDocById(FoodModel)
 
-const getFoodDetailById = async (req, res) => {
+// [GET] /foods/:id/detail
+const getFoodDetailById = (req, res, next) => {
     const { id } = req.params
-    var food = await FoodModel.findById(id)
-    // console.log(food);
-    food = food.toObject()
-    food.orderOptions = []
-    for (let i = 0; i < food.optionIds.length; i++) {
-        var option = await OptionModel.findById(food.optionIds[i])
-        option = option.toObject()
-        option.options = option.items.map((item) => {
-            return item.name
+    FoodModel.findById(id)
+        .then((food) => {
+            const foodDetail = food.toObject()
+            foodDetail.images = foodDetail.imageUrls
+            foodDetail.unitPrice = foodDetail.price
+            delete foodDetail.imageUrls
+            delete foodDetail.price
+            
+            const optionQueries = []
+            foodDetail.optionIds.forEach((optionId) => {
+                optionQueries.push(OptionModel.findById(optionId))
+            })
+            foodDetail.orderOptions = []
+            Promise.all(optionQueries)
+                .then((options) => options.map((option) => option.toObject()))
+                .then((options) => {
+                    options.forEach((option) => {
+                        const { items, name, isMultiSelect } = option
+                        const orderOption = {
+                            options: items.map((item) => item.name),
+                            price: items.map((item) => item.price),
+                            answer: items.map((item) => false),
+                            title: name,
+                            isMultiSelect,
+                        }
+                        if (!isMultiSelect) {
+                            orderOption.answer[0] = true
+                        }
+                    
+                        foodDetail.orderOptions.push(orderOption)
+                    })
+
+                    return res.status(200).send(foodDetail)
+                })
+                .catch(next)
         })
-
-        option.price = option.items.map((item) => {
-            return item.price
-        })
-
-        option.answer = option.items.map((item, idx) => { return false })
-        if (!option.isMultiSelect) {
-            option.answer[0] = true
-        }
-
-        delete option.items
-
-        option.title = option.name
-        delete option.name
-        food.orderOptions[i] = option
-    }
-    food.images = food.imageUrls
-    delete food.imageUrls
-
-    food.unitPrice = food.price
-    delete food.price
-
-    res.status(200).send(food)
+        .catch(next)
 }
 
 // [GET] /foods

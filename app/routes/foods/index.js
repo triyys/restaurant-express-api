@@ -9,7 +9,6 @@ const {
     deleteFood,
 } = require('../../controllers/food')
 const { validateRequestBody } = require('../../middlewares')
-const { useError } = require('../../utils')
 const optionsRouter = require('./options')
 
 
@@ -17,7 +16,7 @@ router.use('/options', optionsRouter)
 
 router.get('/', getAllFood)
 router.get('/:id', getFoodById)
-router.get('/detail/:id', useError(getFoodDetailById))
+router.get('/:id/detail', getFoodDetailById)
 
 router.post('/', validateRequestBody([
     'name',
