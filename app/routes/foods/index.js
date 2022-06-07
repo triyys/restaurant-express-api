@@ -10,9 +10,11 @@ const {
 } = require('../../controllers/food')
 const { validateRequestBody } = require('../../middlewares')
 const optionsRouter = require('./options')
+const cartsRouter = require('./carts')
 
 
 router.use('/options', optionsRouter)
+router.use('/carts', cartsRouter)
 
 router.get('/', getAllFood)
 router.get('/:id', getFoodById)
