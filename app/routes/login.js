@@ -1,7 +1,8 @@
 const express = require('express')
 const router = express.Router()
-const loginController = require('../controllers/login')
+const { checkLogin } = require('../controllers/login')
+const { validateRequestBody } = require('../middlewares')
 
-router.post('/', loginController.checkLogin)
+router.post('/', validateRequestBody(['account', 'password']), checkLogin)
 
 module.exports = router

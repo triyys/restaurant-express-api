@@ -1,19 +1,19 @@
 const EmployeeModel = require('../models/EmployeeModel')
 
-const checkLogin = function(req, res) {
-    EmployeeModel.findOne({
-        account : req.body.account,
-        password : req.body.password,
-    })
-        .then(account => {
-            if (account) {
-                res.send('Accept')
-            } else {
-                res.send('Reject')
+const checkLogin = (req, res, next) => {
+    const { account, password } = req.body
+    EmployeeModel.findOne({ account, password })
+        .then((account) => {
+            const result = {
+                status: true,
+                message: `Log in successfully`,
             }
+            console.log(result)
+            return res.status(200).send(result)
         })
+        .catch(next)
 }
 
 module.exports = {
-    checkLogin
+    checkLogin,
 }
