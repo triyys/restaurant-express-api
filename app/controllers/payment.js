@@ -8,9 +8,6 @@ paypal.configure({
 })
 
 const processPayment = (req, res) => {
-    console.log("Process Info")
-    console.log(req.body.amount)
-    console.log(req.body.description)
     const create_payment_json = {
         "intent": "sale",
         "payer": {

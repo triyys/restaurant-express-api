@@ -1,6 +1,6 @@
-const FoodModel = require('../models/FoodModel')
-const OptionModel = require('../models/OptionModel')
-const { getMongoDocById } = require('../utils')
+const FoodModel = require('../../models/FoodModel')
+const OptionModel = require('../../models/OptionModel')
+const { getMongoDocById } = require('../../utils')
 
 // [GET] /foods/:id
 const getFoodById = getMongoDocById(FoodModel)
@@ -99,18 +99,6 @@ const deleteFood = (req, res, next) => {
         .catch(next)
 }
 
-// [GET] /foods/options
-const getAllOptions = (req, res, next) => {
-    OptionModel.find()
-        .then((options) => {
-            return res.status(200).send(options)
-        })
-        .catch(next)
-}
-
-// [GET] /foods/options/:id
-const getOptionById = getMongoDocById(OptionModel)
-
 module.exports = {
     getFoodById,
     getFoodDetailById,
@@ -119,6 +107,4 @@ module.exports = {
     createFood,
     updateFood,
     deleteFood,
-    getAllOptions,
-    getOptionById,
 }

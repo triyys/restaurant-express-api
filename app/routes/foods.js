@@ -7,14 +7,16 @@ const {
     getAllFood,
     updateFood,
     deleteFood,
-} = require('../../controllers/food')
-const { validateRequestBody } = require('../../middlewares')
-const optionsRouter = require('./options')
-const cartsRouter = require('./carts')
+    getAllOptions,
+    getOptionById,
+    getCartItems,
+} = require('../controllers/food')
+const { validateRequestBody } = require('../middlewares')
 
 
-router.use('/options', optionsRouter)
-router.use('/carts', cartsRouter)
+router.get('/options', getAllOptions)
+router.get('/options/:id', getOptionById)
+router.get('/carts', getCartItems)
 
 router.get('/', getAllFood)
 router.get('/:id', getFoodById)

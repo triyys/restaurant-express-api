@@ -5,14 +5,18 @@ const {
     updateStatus,
     getAllOrder,
     getOrderById,
-} = require('../../controllers/order')
-const topFoodRouter = require('./topFood')
-const statusRouter = require('./status')
-const { validateRequestBody } = require('../../middlewares')
+    getTopOrderedFoods,
+    updateStatusAll
+} = require('../controllers/order')
+const { validateRequestBody, validateQuery } = require('../middlewares')
 
 
-router.use('/top-food', topFoodRouter)
-router.use('/status', statusRouter)
+router.get('/top-food', validateQuery(['count']), getTopOrderedFoods)
+router.post(
+    '/status',
+    validateRequestBody(['selectedStatus', 'newStatus']),
+    updateStatusAll
+)
 
 router.get('/', getAllOrder)
 router.get('/:id', getOrderById)
