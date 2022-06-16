@@ -26,7 +26,7 @@ router.post('/', validateRequestBody([
     'name',
     'price',
     'type',
-]), createFood)
+]), inputLogger, createFood)
 
 router.put('/:id', inputLogger, updateFood)
 
