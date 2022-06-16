@@ -16,7 +16,10 @@ const createBanner = (req, res, next) => {
                 status: true,
                 message: `Banner ${banner._id} is created`,
             }
-            return res.status(200).send(result)
+            return res
+                .location(`${req.originalUrl}/${banner._id}`)
+                .status(201)
+                .send(result)
         })
         .catch(next)
 }

@@ -21,7 +21,10 @@ const createOrder = function(req, res, next) {
                 status: true,
                 message: `Order ${order._id} is created`,
             }
-            return res.status(200).send(result)
+            return res
+                .location(`${req.originalUrl}/${order._id}`)
+                .status(201)
+                .send(result)
         })
         .catch(next)
 }

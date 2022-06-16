@@ -65,7 +65,7 @@ const createFood = (req, res, next) => {
                 message: `Food ${food.name} is created`,
             }
             return res
-                .location(`/foods/${food._id}`)
+                .location(`${req.originalUrl}/${food._id}`)
                 .status(201)
                 .send(result)
         })
@@ -76,13 +76,7 @@ const createFood = (req, res, next) => {
 const updateFood = (req, res, next) => {
     const { id } = req.params
     FoodModel.findByIdAndUpdate(id, { $set: req.body })
-        .then(() => {
-            const result = {
-                status: true,
-                message: `Food ${id} is updated`,
-            }
-            return res.status(200).send(result)
-        })
+        .then(() => res.status(204))
         .catch(next)
 }
 
@@ -90,13 +84,7 @@ const updateFood = (req, res, next) => {
 const deleteFood = (req, res, next) => {
     const { id } = req.params
     FoodModel.findByIdAndDelete(id)
-        .then(() => {
-            const result = {
-                status: true,
-                message: `Food ${id} is deleted`,
-            }
-            return res.status(200).send(result)
-        })
+        .then(() => res.status(204))
         .catch(next)
 }
 
