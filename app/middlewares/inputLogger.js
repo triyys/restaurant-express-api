@@ -4,7 +4,7 @@ const inputLogger = (req, res, next) => {
         ...req.query,
         ...req.body,
     }
-    console.log(`${req.originalUrl}: `, input)
+    console.log(`[${req.method}] ${req.originalUrl}: `, input)
     next()
 }
 
