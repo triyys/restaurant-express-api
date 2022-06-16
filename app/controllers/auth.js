@@ -14,14 +14,12 @@ const signIn = async (req, res, next) => {
                 message: 'Log in successfully',
                 accessToken,
             }
-            console.log(result)
             return res.status(200).send(result)
         } else {
             const result = {
                 status: false,
                 message: 'Wrong username or password',
             }
-            console.log(result)
             return res.status(401).send(result)
         }
     } else {
@@ -29,7 +27,6 @@ const signIn = async (req, res, next) => {
             status: false,
             message: 'Wrong username or password',
         }
-        console.error(result)
         return res.status(401).send(result)
     }
 }
@@ -42,7 +39,6 @@ const signUp = async (req, res, next) => {
             status: false,
             message: 'Username is existed',
         }
-        console.log(result)
         return res.status(400).send(result)
     } else {
         const hashedPassword = await argon2.hash(password)
@@ -53,7 +49,6 @@ const signUp = async (req, res, next) => {
             message: `Employee ${user._id} is created`,
             accessToken,
         }
-        console.log(result)
         return res.status(200).send(result)
     }
 }

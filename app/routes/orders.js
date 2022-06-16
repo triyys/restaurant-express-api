@@ -8,19 +8,20 @@ const {
     getTopOrderedFoods,
     updateStatusAll
 } = require('../controllers/order')
-const { validateRequestBody, validateQuery } = require('../middlewares')
+const { validateRequestBody, validateQuery, inputLogger } = require('../middlewares')
 
 
-router.get('/top-food', validateQuery(['count']), getTopOrderedFoods)
+router.get('/top-food', validateQuery(['count']), inputLogger, getTopOrderedFoods)
 router.post(
     '/status',
     validateRequestBody(['selectedStatus', 'newStatus']),
+    inputLogger,
     updateStatusAll
 )
 
-router.get('/', getAllOrder)
-router.get('/:id', getOrderById)
-router.post('/', createOrder)
-router.patch('/:id', validateRequestBody(['status']), updateStatus)
+router.get('/', inputLogger, getAllOrder)
+router.get('/:id', inputLogger, getOrderById)
+router.post('/', inputLogger, createOrder)
+router.patch('/:id', validateRequestBody(['status']), inputLogger, updateStatus)
 
 module.exports = router

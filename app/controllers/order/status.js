@@ -11,7 +11,6 @@ const updateStatus = function(req, res, next){
                 status: true,
                 message: `Order ${id} is updated`,
             }
-            console.log(result)
             return res.status(200).send(result)
         })
         .catch(next)
@@ -32,7 +31,6 @@ const updateStatusAll = function(req, res, next){
                 status: acknowledged,
                 message: matchedCount > 0 ? `${modifiedCount} document(s) updated` : 'No documents found',
             }
-            console.log(result)
             return res.status(200).send(result)
         })
         .catch(next)

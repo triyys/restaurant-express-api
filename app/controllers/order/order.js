@@ -21,7 +21,6 @@ const createOrder = function(req, res, next) {
                 status: true,
                 message: `Order ${order._id} is created`,
             }
-            console.log(result)
             return res.status(200).send(result)
         })
         .catch(next)

@@ -62,10 +62,12 @@ const createFood = (req, res, next) => {
         .then((food) => {
             const result = {
                 status: true,
-                message: `Food ${food._id} is created`,
+                message: `Food ${food.name} is created`,
             }
-            console.log(result)
-            return res.status(200).send(result)
+            return res
+                .location(`/foods/${food._id}`)
+                .status(201)
+                .send(result)
         })
         .catch(next)
 }
@@ -79,7 +81,6 @@ const updateFood = (req, res, next) => {
                 status: true,
                 message: `Food ${id} is updated`,
             }
-            console.log(result)
             return res.status(200).send(result)
         })
         .catch(next)

@@ -11,16 +11,16 @@ const {
     getOptionById,
     getCartItems,
 } = require('../controllers/food')
-const { validateRequestBody } = require('../middlewares')
+const { validateRequestBody, inputLogger } = require('../middlewares')
 
 
 router.get('/options', getAllOptions)
 router.get('/options/:id', getOptionById)
 router.get('/carts', getCartItems)
 
-router.get('/', getAllFood)
-router.get('/:id', getFoodById)
-router.get('/:id/detail', getFoodDetailById)
+router.get('/', inputLogger, getAllFood)
+router.get('/:id', inputLogger, getFoodById)
+router.get('/:id/detail', inputLogger, getFoodDetailById)
 
 router.post('/', validateRequestBody([
     'name',
@@ -28,8 +28,8 @@ router.post('/', validateRequestBody([
     'type',
 ]), createFood)
 
-router.put('/:id', updateFood)
+router.put('/:id', inputLogger, updateFood)
 
-router.delete('/:id', deleteFood)
+router.delete('/:id', inputLogger, deleteFood)
 
 module.exports = router

@@ -16,7 +16,6 @@ const createBanner = (req, res, next) => {
                 status: true,
                 message: `Banner ${banner._id} is created`,
             }
-            console.log(result)
             return res.status(200).send(result)
         })
         .catch(next)
