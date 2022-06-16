@@ -76,7 +76,7 @@ const createFood = (req, res, next) => {
 const updateFood = (req, res, next) => {
     const { id } = req.params
     FoodModel.findByIdAndUpdate(id, { $set: req.body })
-        .then(() => res.status(204))
+        .then(() => res.status(204).send())
         .catch(next)
 }
 
@@ -84,7 +84,7 @@ const updateFood = (req, res, next) => {
 const deleteFood = (req, res, next) => {
     const { id } = req.params
     FoodModel.findByIdAndDelete(id)
-        .then(() => res.status(204))
+        .then(() => res.status(204).send())
         .catch(next)
 }
 
