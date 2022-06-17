@@ -7,16 +7,21 @@ const route = require('./app/routes')
 
 const app = express()
 
-var corsOptions = {
+const corsOptions = {
     origin: 'http://localhost:3000'
 }
 
+// Use initial middlewares
 app.use(cors(corsOptions))
+app.use(express.urlencoded({
+    extended: true
+}))
 app.use(express.json())
 
 // Routes init
 route(app)
 
+// Error handler
 app.use((error, req, res, next) => {
     console.log(`Caught the error: ${error}`)
     return res.status(500).send(error.toString())
