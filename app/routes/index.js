@@ -1,3 +1,4 @@
+const { verifyAccessToken } = require('../middlewares')
 const authsRouter = require('./auths')
 const bannersRouter = require('./banners')
 const foodsRouter = require('./foods')
@@ -9,7 +10,7 @@ function route(app) {
     app.use('/banners', bannersRouter)
     app.use('/foods', foodsRouter)
     app.use('/orders', ordersRouter)
-    app.use('/payment', paymentRouter)
+    app.use('/payment', verifyAccessToken, paymentRouter)
 }
 
 module.exports = route
