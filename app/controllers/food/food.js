@@ -1,6 +1,6 @@
 const FoodModel = require('../../models/FoodModel')
 const OptionModel = require('../../models/OptionModel')
-const { getMongoDocById } = require('../../utils')
+const { getMongoDocById, customResponse } = require('../../utils')
 
 // [GET] /foods/:id
 const getFoodById = getMongoDocById(FoodModel)
@@ -60,14 +60,10 @@ const getAllFood = (req, res, next) => {
 const createFood = (req, res, next) => {
     FoodModel.create(req.body)
         .then((food) => {
-            const result = {
-                status: true,
-                message: `Food ${food.name} is created`,
-            }
             return res
                 .location(`${req.originalUrl}/${food._id}`)
                 .status(201)
-                .send(result)
+                .send(customResponse(`Food ${food.name} is created`))
         })
         .catch(next)
 }

@@ -1,4 +1,5 @@
 const OrderModel = require('../../models/OrderModel')
+const { customResponse } = require('../../utils')
 
 // [PATCH] /orders/:id
 const updateStatus = function(req, res, next){
@@ -6,13 +7,7 @@ const updateStatus = function(req, res, next){
     const { status } = req.body
 
     OrderModel.findByIdAndUpdate({ _id: id }, { status })
-        .then(() => {
-            const result = {
-                status: true,
-                message: `Order ${id} is updated`,
-            }
-            return res.status(200).send(result)
-        })
+        .then(() => res.status(204).send())
         .catch(next)
 }
 
@@ -22,16 +17,10 @@ const updateStatusAll = function(req, res, next){
     OrderModel
         .updateMany({ status: selectedStatus }, { status: newStatus })
         .then((data) => {
-            const {
-                acknowledged,
-                modifiedCount,
-                matchedCount,
-            } = data
-            const result = {
-                status: acknowledged,
-                message: matchedCount > 0 ? `${modifiedCount} document(s) updated` : 'No documents found',
-            }
-            return res.status(200).send(result)
+            const { matchedCount, modifiedCount } = data
+            const message = matchedCount > 0 ? `${modifiedCount} document(s) updated` : 'No documents found'
+            
+            return res.status(200).send(customResponse(message))
         })
         .catch(next)
 }

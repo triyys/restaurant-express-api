@@ -1,5 +1,5 @@
 const BannerModel = require('../models/BannerModel')
-const { getMongoDocById, getMongoCollection } = require('../utils')
+const { getMongoDocById, getMongoCollection, customResponse } = require('../utils')
 
 // [GET] /banners/:id
 const getBannerById = getMongoDocById(BannerModel)
@@ -12,14 +12,10 @@ const createBanner = (req, res, next) => {
     const { imageUrls } = req.body
     BannerModel.create({ imageUrls })
         .then((banner) => {
-            const result = {
-                status: true,
-                message: `Banner ${banner._id} is created`,
-            }
             return res
                 .location(`${req.originalUrl}/${banner._id}`)
                 .status(201)
-                .send(result)
+                .send(customResponse(`Banner ${banner._id} is created`))
         })
         .catch(next)
 }
