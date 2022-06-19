@@ -14,7 +14,8 @@ const verifyAccessToken = (req, res, next) => {
             req.userId = decoded.userId
             next()
         } catch (error) {
-            return res.status(403).send(customResponse(error))
+            console.log(error.message)
+            return res.status(403).send(customResponse(new Error('Invalid token')))
         }
     }
     else {
