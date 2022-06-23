@@ -11,16 +11,21 @@ const {
     getOptionById,
     getCartItems,
 } = require('../controllers/food')
-const { validateRequestBody, inputLogger, verifyAccessToken } = require('../middlewares')
+const {
+    validateRequestBody,
+    inputLogger,
+    verifyAccessToken,
+    validateObjectId,
+} = require('../middlewares')
 
 
 router.get('/options', getAllOptions)
-router.get('/options/:id', getOptionById)
+router.get('/options/:id', validateObjectId('id'), getOptionById)
 router.get('/carts', getCartItems)
 
 router.get('/', inputLogger, getAllFood)
-router.get('/:id', inputLogger, getFoodById)
-router.get('/:id/detail', inputLogger, getFoodDetailById)
+router.get('/:id', inputLogger, validateObjectId('id'), getFoodById)
+router.get('/:id/detail', inputLogger, validateObjectId('id'), getFoodDetailById)
 
 router.post('/', verifyAccessToken, validateRequestBody([
     'name',
@@ -28,8 +33,8 @@ router.post('/', verifyAccessToken, validateRequestBody([
     'type',
 ]), inputLogger, createFood)
 
-router.put('/:id', verifyAccessToken, inputLogger, updateFood)
+router.put('/:id', verifyAccessToken, inputLogger, validateObjectId('id'), updateFood)
 
-router.delete('/:id', verifyAccessToken, inputLogger, deleteFood)
+router.delete('/:id', verifyAccessToken, inputLogger, validateObjectId('id'), deleteFood)
 
 module.exports = router
