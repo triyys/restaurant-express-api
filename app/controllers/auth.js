@@ -10,7 +10,7 @@ const signIn = async (req, res, next) => {
         const isValidPassword = await argon2.verify(user.password, password)
         if (isValidPassword) {
             const accessToken = jwt.sign({ userId: user._id }, process.env.ACCESS_TOKEN_SECRET)
-            return res.status(200).send(customResponse('Log in successfully', accessToken))
+            return res.status(200).send(customResponse('Log in successfully', { accessToken }))
         } else {
             return res.status(401).send(customResponse(new Error('Wrong username or password')))
         }
@@ -29,7 +29,7 @@ const signUp = async (req, res, next) => {
         const user = await EmployeeModel.create({ username, password: hashedPassword })
         const accessToken = jwt.sign({ userId: user._id }, process.env.ACCESS_TOKEN_SECRET)
         
-        return res.status(200).send(customResponse(`Employee ${user._id} is created`, accessToken))
+        return res.status(200).send(customResponse(`Employee ${user._id} is created`, { accessToken }))
     }
 }
 
