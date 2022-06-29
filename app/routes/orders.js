@@ -8,21 +8,20 @@ const {
     getTopOrderedFoods,
     updateStatusAll
 } = require('../controllers/order')
-const { validateRequestBody, validateQuery, inputLogger, verifyAccessToken } = require('../middlewares')
+const { validateRequestBody, validateQuery, verifyAccessToken } = require('../middlewares')
 
 
-router.get('/top-food', validateQuery(['count']), inputLogger, getTopOrderedFoods)
+router.get('/top-food', validateQuery(['count']), getTopOrderedFoods)
 router.post(
     '/status',
     verifyAccessToken,
     validateRequestBody(['selectedStatus', 'newStatus']),
-    inputLogger,
     updateStatusAll
 )
 
-router.get('/', inputLogger, getAllOrder)
-router.get('/:id', inputLogger, getOrderById)
-router.post('/', verifyAccessToken, inputLogger, createOrder)
-router.patch('/:id', verifyAccessToken, validateRequestBody(['status']), inputLogger, updateStatus)
+router.get('/', verifyAccessToken, getAllOrder)
+router.get('/:id', verifyAccessToken, getOrderById)
+router.post('/', verifyAccessToken, createOrder)
+router.patch('/:id', verifyAccessToken, validateRequestBody(['status']), updateStatus)
 
 module.exports = router

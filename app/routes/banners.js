@@ -1,10 +1,10 @@
 const express = require('express')
 const router = express.Router()
 const { getBannerById, getAllBanners, createBanner } = require('../controllers/banner')
-const { validateRequestBody, inputLogger, verifyAccessToken } = require('../middlewares')
+const { validateRequestBody, verifyAccessToken } = require('../middlewares')
 
-router.get('/:id', inputLogger, getBannerById)
-router.get('/', inputLogger, getAllBanners)
-router.post('/', verifyAccessToken, validateRequestBody(['imageUrls']), inputLogger, createBanner)
+router.get('/:id', getBannerById)
+router.get('/', getAllBanners)
+router.post('/', verifyAccessToken, validateRequestBody(['imageUrls']), createBanner)
 
 module.exports = router

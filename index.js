@@ -4,6 +4,7 @@ const cors = require('cors')
 
 const db = require('./app/config/db')
 const route = require('./app/routes')
+const { inputLogger } = require('./app/middlewares')
 
 const app = express()
 
@@ -17,6 +18,7 @@ app.use(express.urlencoded({
     extended: true
 }))
 app.use(express.json())
+app.use(inputLogger(console))
 
 // Routes init
 route(app)
