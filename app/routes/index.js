@@ -9,7 +9,7 @@ function route(app) {
     app.use('/auths', authsRouter)
     app.use('/banners', bannersRouter)
     app.use('/foods', foodsRouter)
-    app.use('/orders', ordersRouter)
+    app.use('/orders', verifyAccessToken, ordersRouter)
     app.use('/payment', verifyAccessToken, paymentRouter)
 }
 
