@@ -49,7 +49,7 @@ const getFoodDetailById = (req, res, next) => {
 
 // [GET] /foods
 const getAllFood = (req, res, next) => {
-    FoodModel.find()
+    FoodModel.find(req.query)
         .then((foods) => {
             return res.status(200).send(foods)
         })
