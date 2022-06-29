@@ -1,7 +1,7 @@
 const OrderModel = require('../../models/OrderModel')
 const FoodModel = require('../../models/FoodModel')
 
-// [GET] /orders/top-food?count={int}
+// [GET] /foods/top-food?count={int}
 const getTopOrderedFoods = function(req, res, next) {
     const { count } = req.query
     OrderModel

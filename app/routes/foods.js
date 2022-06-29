@@ -10,9 +10,11 @@ const {
     getAllOptions,
     getOptionById,
     getCartItems,
+    getTopOrderedFoods,
 } = require('../controllers/food')
 const {
     validateRequestBody,
+    validateQuery,
     verifyAccessToken,
     validateObjectId,
 } = require('../middlewares')
@@ -21,6 +23,7 @@ const {
 router.get('/options', getAllOptions)
 router.get('/options/:id', validateObjectId('id'), getOptionById)
 router.get('/carts', getCartItems)
+router.get('/top-food', validateQuery(['count']), getTopOrderedFoods)
 
 router.get('/', getAllFood)
 router.get('/:id', validateObjectId('id'), getFoodById)

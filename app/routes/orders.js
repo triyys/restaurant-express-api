@@ -5,13 +5,11 @@ const {
     updateStatus,
     getAllOrder,
     getOrderById,
-    getTopOrderedFoods,
     updateStatusAll
 } = require('../controllers/order')
-const { validateRequestBody, validateQuery, verifyAccessToken } = require('../middlewares')
+const { validateRequestBody, verifyAccessToken } = require('../middlewares')
 
 
-router.get('/top-food', validateQuery(['count']), getTopOrderedFoods)
 router.post(
     '/status',
     verifyAccessToken,
