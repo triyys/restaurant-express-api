@@ -49,7 +49,18 @@ const getFoodDetailById = (req, res, next) => {
 
 // [GET] /foods
 const getAllFood = (req, res, next) => {
-    FoodModel.find(req.query)
+    const { sort, limit, offset } = req.query
+    let query = FoodModel.find(req.query)
+
+    if (sort === 'asc' || sort === 'desc') {
+        query = query.sort({ price: sort })
+    }
+    if (Number.isInteger(Number(offset)) && Number(offset) > 0) {
+        query = query.skip(Number(offset))
+    }
+    query = query.limit(Number(limit) || 5)
+
+    query
         .then((foods) => {
             return res.status(200).send(foods)
         })
