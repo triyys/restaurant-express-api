@@ -4,6 +4,7 @@ const {
     getFoodById,
     getFoodDetailById,
     createFood,
+    getOnlyFoodCount,
     getAllFood,
     updateFood,
     deleteFood,
@@ -24,6 +25,7 @@ router.get('/options', getAllOptions)
 router.get('/options/:id', validateObjectId('id'), getOptionById)
 router.get('/carts', getCartItems)
 router.get('/top-food', validateQuery(['count']), getTopOrderedFoods)
+router.get('/count', getOnlyFoodCount)
 
 router.get('/', getAllFood)
 router.get('/:id', validateObjectId('id'), getFoodById)

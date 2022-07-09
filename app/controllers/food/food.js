@@ -47,6 +47,15 @@ const getFoodDetailById = (req, res, next) => {
         .catch(next)
 }
 
+// [GET] /foods/count
+const getOnlyFoodCount = (req, res, next) => {
+    FoodModel.count(req.query)
+        .then((count) => {
+            return res.status(200).send(customResponse(count))
+        })
+        .catch(next)
+}
+
 // [GET] /foods
 const getAllFood = (req, res, next) => {
     const { sort, limit, offset } = req.query
@@ -98,6 +107,7 @@ const deleteFood = (req, res, next) => {
 module.exports = {
     getFoodById,
     getFoodDetailById,
+    getOnlyFoodCount,
     getAllFood,
     getAllFood,
     createFood,
