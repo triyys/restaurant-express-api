@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const uri = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.CLUSTER_NAME}.mongodb.net/RestaurantPOS?retryWrites=true&w=majority`
+const uri = process.env.MONGODB_CONNECTION_STRING
 
 async function connect() {
     try {
