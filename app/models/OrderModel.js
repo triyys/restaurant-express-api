@@ -1,6 +1,5 @@
-const mongoose = require('mongoose')
-
-const Schema = mongoose.Schema
+const { Schema } = require('mongoose')
+const mongodb = require('../services/mongodb')
 
 const Order = new Schema({
     customerInfo: {
@@ -28,4 +27,4 @@ const Order = new Schema({
     }
 })
 
-module.exports = mongoose.model('orders', Order)
+module.exports = mongodb.model('orders', Order)

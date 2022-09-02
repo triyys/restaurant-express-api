@@ -1,31 +1,9 @@
-const mongoose = require('mongoose')
-const postgres = require('../app/services/postgres')
 
-const connectToMongoDB = () => {
-    mongoose.connect(process.env.MONGODB_CONNECTION_STRING)
-        .then(() => {
-            console.log('MongoDB is connected successfully')
-        })
-        .catch((error) => {
-            console.log('Cannot connect to MongoDB')
-            console.log(error)
-        })
+module.exports = {
+    postgresql: {
+        url: process.env.POSTGRESQL_CONNECTION_STRING,
+    },
+    mongodb: {
+        url: process.env.MONGODB_CONNECTION_STRING,
+    },
 }
-
-const connectToPostgres = () => {
-    postgres.authenticate()
-        .then(() => {
-            console.log('PostgreSQL is connected successfully')
-        })
-        .catch((error) => {
-            console.log('Cannot connect to PostgreSQL')
-            console.log(error)
-        })
-}
-
-function connect() {
-    connectToMongoDB()
-    connectToPostgres()
-}
-
-module.exports = { connect, postgres }

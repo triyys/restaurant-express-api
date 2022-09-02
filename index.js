@@ -2,7 +2,6 @@ require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
 
-const datastores = require('./config/datastores')
 const route = require('./app/routes')
 const { inputLogger } = require('./app/middlewares')
 const ErrorHandler = require('./app/common/ErrorHandler')
@@ -30,11 +29,14 @@ app.use((error, req, res, next) => {
     return res.status(500).send(error.toString())
 })
 
-datastores.connect()
-
 const PORT = process.env.PORT || 8080
 app.listen(PORT, async () => {
     console.log(`Server is running on port ${PORT}.`)
-    await ErrorHandler.loadErrorDictionary()
-    console.log('All data loaded')
+    try {
+        await ErrorHandler.loadErrorDictionary()
+        console.log('All data loaded')
+    } catch (error) {
+        console.log(error)
+        console.error('Failed to load app data')
+    }
 })

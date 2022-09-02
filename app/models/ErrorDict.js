@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize')
-const { postgres } = require('../../config/datastores')
+const postgres = require('../services/postgres')
 
 const ErrorDict = postgres.define('errordict', {
     code: {
