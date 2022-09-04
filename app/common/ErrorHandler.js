@@ -3,9 +3,8 @@ const getErrorDictionary = require("../helpers/getErrorDictionary")
 let errorDict = {}
 
 module.exports = {
-    getErrorMessageByCode(code, lang) {
-        const language = lang || 'vi'
-        const errorMessage = errorDict[language][code] || errorDict[language]['-1'] || 'Internal error'
+    getErrorMessageByCode(code, lang = 'vi') {
+        const errorMessage = errorDict[lang][code] || errorDict[lang]['-1'] || 'Internal error'
         return errorMessage
     },
     async loadErrorDictionary() {

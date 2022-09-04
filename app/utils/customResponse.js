@@ -1,8 +1,10 @@
-const customResponse = (response, payload = {}) => {
+const ErrorHandler = require("../common/ErrorHandler")
+
+const customResponse = (response, payload = {}, language = 'vi') => {
     if (response instanceof Error) {
         return {
             status: 'e',
-            message: response.message,
+            message: ErrorHandler.getErrorMessageByCode(response.message, language),
             ...payload,
         }
     } else {

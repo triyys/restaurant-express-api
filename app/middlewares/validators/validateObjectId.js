@@ -6,7 +6,7 @@ const validateObjectId = (names) => {
     return (req, res, next) => {
         for (const name of names) {
             if (!isValidObjectId(req.params[name])) {
-                return res.status(400).send(customResponse(new Error('Invalid resource')))
+                return res.status(400).send(customResponse(new Error('-4')))
             }
         }
         next()
