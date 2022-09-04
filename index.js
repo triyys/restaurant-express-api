@@ -1,19 +1,16 @@
-require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
 
 const route = require('./app/routes')
 const { inputLogger } = require('./app/middlewares')
 const ErrorHandler = require('./app/common/ErrorHandler')
+const { port } = require('./config/env')
+const { cors: corsConfig } = require('./config/security')
 
 const app = express()
 
-const corsOptions = {
-    origin: 'http://localhost:3000'
-}
-
 // Use initial middlewares
-app.use(cors(corsOptions))
+app.use(cors(corsConfig))
 app.use(express.urlencoded({
     extended: true
 }))
@@ -29,9 +26,8 @@ app.use((error, req, res, next) => {
     return res.status(500).send(error.toString())
 })
 
-const PORT = process.env.PORT || 8080
-app.listen(PORT, async () => {
-    console.log(`Server is running on port ${PORT}.`)
+app.listen(port, async () => {
+    console.log(`Server is running on port ${port}.`)
     try {
         await ErrorHandler.loadErrorDictionary()
         console.log('All data loaded')

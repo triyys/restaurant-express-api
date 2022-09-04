@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken')
 const { customResponse } = require('../utils')
+const { jwtSecret } = require('../../config/env')
 
 const verifyAccessToken = (req, res, next) => {
     const authorization = req.header('Authorization')
@@ -10,7 +11,7 @@ const verifyAccessToken = (req, res, next) => {
     const [type, accessToken] = authorization.split(' ')
     if (type === 'Bearer') {
         try {
-            const decoded = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET)
+            const decoded = jwt.verify(accessToken, jwtSecret)
             req.userId = decoded.userId
             next()
         } catch (error) {
