@@ -1,5 +1,6 @@
 const OrderModel = require('../../models/OrderModel')
-const { getMongoDocById, customResponse } = require('../../utils')
+const { success } = require('../../responses')
+const { getMongoDocById } = require('../../utils')
 
 // [GET] /orders
 const getAllOrder = (req, res, next) => {
@@ -20,7 +21,7 @@ const createOrder = function(req, res, next) {
             return res
                 .location(`${req.originalUrl}/${order._id}`)
                 .status(201)
-                .send(customResponse(`Order ${order._id} is created`))
+                .send(success())
         })
         .catch(next)
 }
