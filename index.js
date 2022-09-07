@@ -4,23 +4,20 @@ const cors = require('cors')
 const route = require('./app/routes')
 const { inputLogger } = require('./app/middlewares')
 const ErrorHandler = require('./app/common/ErrorHandler')
-const { port } = require('./config/env')
-const { cors: corsConfig } = require('./config/security')
+const { port, cors: corsConfig } = require('./config')
 
 const app = express()
 
 // Use initial middlewares
 app.use(cors(corsConfig))
-app.use(express.urlencoded({
-    extended: true
-}))
+app.use(express.urlencoded({extended: true}))
 app.use(express.json())
 app.use(inputLogger(console))
 
 // Routes init
 route(app)
 
-// Error handler
+// Default error handler
 app.use((error, req, res, next) => {
     console.log(`Caught the error: ${error}`)
     return res.status(500).send(error.toString())

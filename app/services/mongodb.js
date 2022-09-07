@@ -1,5 +1,5 @@
 const { createConnection } = require('mongoose')
-const { mongodb: mongodbConfig } = require('../../config/datastores')
+const { mongodb: mongodbConfig } = require('../../config')
 
 const mongodb = createConnection(mongodbConfig.url)
 

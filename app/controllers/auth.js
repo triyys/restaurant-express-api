@@ -1,7 +1,7 @@
 const EmployeeModel = require('../models/EmployeeModel')
 const argon2 = require('argon2')
 const jwt = require('jsonwebtoken')
-const { jwtSecret } = require('../../config/env')
+const { jwtSecret } = require('../../config')
 const { success, failure } = require('../responses')
 
 const signIn = async (req, res, next) => {

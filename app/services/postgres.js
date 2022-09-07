@@ -1,5 +1,5 @@
 const { Sequelize } = require('sequelize')
-const { postgresql } = require('../../config/datastores')
+const { postgresql } = require('../../config')
 
 const postgres = new Sequelize(postgresql.url)
 
