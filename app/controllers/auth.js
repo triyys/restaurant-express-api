@@ -1,7 +1,8 @@
 const EmployeeModel = require('../models/EmployeeModel')
 const argon2 = require('argon2')
 const jwt = require('jsonwebtoken')
-const { customResponse } = require('../utils')
+const { jwtSecret } = require('../../config')
+const { success, failure } = require('../responses')
 
 const signIn = async (req, res, next) => {
     const { username, password } = req.body
@@ -9,13 +10,13 @@ const signIn = async (req, res, next) => {
     if (user) {
         const isValidPassword = await argon2.verify(user.password, password)
         if (isValidPassword) {
-            const accessToken = jwt.sign({ userId: user._id }, process.env.ACCESS_TOKEN_SECRET)
-            return res.status(200).send(customResponse('Log in successfully', { accessToken }))
+            const accessToken = jwt.sign({ userId: user._id }, jwtSecret)
+            return res.status(200).send(success({ accessToken }))
         } else {
-            return res.status(401).send(customResponse(new Error('Wrong username or password')))
+            return res.status(401).send(failure({ errcode: '-5' }))
         }
     } else {
-        return res.status(401).send(customResponse(new Error('Wrong username or password')))
+        return res.status(401).send(failure({ errcode: '-5' }))
     }
 }
 
@@ -23,13 +24,13 @@ const signUp = async (req, res, next) => {
     const { username, password } = req.body
     const user = await EmployeeModel.findOne({ username, password })
     if (user) {
-        return res.status(400).send(customResponse(new Error('Username is existed')))
+        return res.status(400).send(failure({ errcode: '-6' }))
     } else {
         const hashedPassword = await argon2.hash(password)
         const user = await EmployeeModel.create({ username, password: hashedPassword })
-        const accessToken = jwt.sign({ userId: user._id }, process.env.ACCESS_TOKEN_SECRET)
+        const accessToken = jwt.sign({ userId: user._id }, jwtSecret)
         
-        return res.status(200).send(customResponse(`Employee ${user._id} is created`, { accessToken }))
+        return res.status(200).send(success({ accessToken, userId: user._id }))
     }
 }
 

@@ -1,5 +1,5 @@
 const OrderModel = require('../../models/OrderModel')
-const { customResponse } = require('../../utils')
+const { success } = require('../../responses')
 
 // [PATCH] /orders/:id
 const updateStatus = function(req, res, next){
@@ -20,7 +20,7 @@ const updateStatusAll = function(req, res, next){
             const { matchedCount, modifiedCount } = data
             const message = matchedCount > 0 ? `${modifiedCount} document(s) updated` : 'No documents found'
             
-            return res.status(200).send(customResponse(message))
+            return res.status(200).send(success(message))
         })
         .catch(next)
 }

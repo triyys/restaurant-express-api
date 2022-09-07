@@ -1,6 +1,7 @@
 const FoodModel = require('../../models/FoodModel')
 const OptionModel = require('../../models/OptionModel')
-const { getMongoDocById, customResponse } = require('../../utils')
+const { success } = require('../../responses')
+const { getMongoDocById } = require('../../utils')
 
 // [GET] /foods/:id
 const getFoodById = getMongoDocById(FoodModel)
@@ -51,7 +52,7 @@ const getFoodDetailById = (req, res, next) => {
 const getOnlyFoodCount = (req, res, next) => {
     FoodModel.count(req.query)
         .then((count) => {
-            return res.status(200).send(customResponse(count))
+            return res.status(200).send(success({ count }))
         })
         .catch(next)
 }
@@ -83,7 +84,7 @@ const createFood = (req, res, next) => {
             return res
                 .location(`${req.originalUrl}/${food._id}`)
                 .status(201)
-                .send(customResponse(`Food ${food.name} is created`))
+                .send(success())
         })
         .catch(next)
 }

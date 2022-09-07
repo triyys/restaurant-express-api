@@ -1,6 +1,5 @@
-const mongoose = require('mongoose')
-
-const Schema = mongoose.Schema
+const { Schema } = require('mongoose')
+const mongodb = require('../services/mongodb')
 
 const Banner = new Schema({
     imageUrls: [String]
@@ -11,4 +10,4 @@ const Banner = new Schema({
     },
 })
 
-module.exports = mongoose.model('banners', Banner)
+module.exports = mongodb.model('banners', Banner)
