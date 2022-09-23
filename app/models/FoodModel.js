@@ -1,14 +1,29 @@
-const { Schema, SchemaTypes } = require('mongoose')
-const mongodb = require('../services/mongodb')
+const mongoModelClient = require('../services/mongoModelClient')
 
-const Food = new Schema({
-    name: String,
-    price: Number,
-    discount: String, // 'x%' or number
-    imageUrls: [String],
-    description: String,
-    optionIds: [SchemaTypes.ObjectId],
-    type: { type: String },
-})
+const food = {
+    modelName: 'foods',
+    attributes: {
+        name: {
+            type: 'string',
+            required: true,
+        },
+        price: {
+            type: 'number',
+            required: true,
+        },
+        discount: 'string',
+        imageUrls: '[string]',
+        description: 'string',
+        optionIds: {
+            type: '[_id]',
+        },
+        type: {
+            type: 'string',
+        },
+    },
+    options: {
+        timestamps: true,
+    }
+}
 
-module.exports = mongodb.model('foods', Food)
+module.exports = mongoModelClient.createModel(food)

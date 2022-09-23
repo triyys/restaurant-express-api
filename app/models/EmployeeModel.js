@@ -1,14 +1,20 @@
-const { Schema } = require('mongoose')
-const mongodb = require('../services/mongodb')
+const mongoModelClient = require('../services/mongoModelClient')
 
-const Employee = new Schema({
-    username: { type: String, required: true },
-    password: { type: String, required: true },
-}, {
-    timestamps: {
-        createdAt: true,
-        updatedAt: true,
+const employee = {
+    modelName: 'employees',
+    attributes: {
+        username: {
+            type: 'string',
+            required: true,
+        },
+        password: {
+            type: 'string',
+            required: true,
+        },
     },
-})
+    options: {
+        timestamps: true,
+    }
+}
 
-module.exports = mongodb.model('employees', Employee)
+module.exports = mongoModelClient.createModel(employee)

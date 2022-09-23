@@ -1,21 +1,24 @@
-const { DataTypes } = require('sequelize')
-const postgres = require('../services/postgres')
+const postgresModelClient = require('../services/postgresModelClient')
 
-const ErrorDict = postgres.define('errordict', {
-    code: {
-        type: DataTypes.STRING,
-        primaryKey: true,
-        allowNull: false,
+const errorDict = {
+    modelName: 'errordict',
+    attributes: {
+        code: {
+            type: 'string',
+            primaryKey: true,
+            allowNull: false,
+        },
+        vi: {
+            type: 'string',
+        },
+        en: {
+            type: 'string',
+        }
     },
-    vi: {
-        type: DataTypes.STRING,
+    options: {
+        freezeTableName: true,
+        timestamps: false,
     },
-    en: {
-        type: DataTypes.STRING,
-    },
-}, {
-    freezeTableName: true,
-    timestamps: false,
-})
+}
 
-module.exports = ErrorDict
+module.exports = postgresModelClient.createModel(errorDict)

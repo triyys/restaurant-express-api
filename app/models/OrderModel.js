@@ -1,30 +1,45 @@
-const { Schema } = require('mongoose')
-const mongodb = require('../services/mongodb')
+const mongoModelClient = require('../services/mongoModelClient')
 
-const Order = new Schema({
-    customerInfo: {
-        name: String,
-        address: String,
-        phone: String,
-        district: String,
-        ward: String,
-        typeOrder: String, 
+const order = {
+    modelName: 'orders',
+    attributes: {
+        customerInfo: 'ref',
+        shipFee: 'number',
+        status: {
+            type: 'string',
+            default: 'Đang chờ xử lý',
+        },
+        items: 'ref',
     },
-    shipFee: Number,
-    status: { type : String, default : 'Đang chờ xử lý'},
-    items: [{
-        options: String,
-        name: String,
-        imageUrl: String,
-        price: Number,
-        // discount: String, // 'x%' or number
-        quantity: Number
-    }]
-}, {
-    timestamps: {
-        createdAt: true,
-        updatedAt: false
-    }
-})
+    options: {
+        timestamps: true,
+    },
+}
 
-module.exports = mongodb.model('orders', Order)
+// const Order = new Schema({
+//     customerInfo: {
+//         name: String,
+//         address: String,
+//         phone: String,
+//         district: String,
+//         ward: String,
+//         typeOrder: String, 
+//     },
+//     shipFee: Number,
+//     status: { type : String, default : 'Đang chờ xử lý'},
+//     items: [{
+//         options: String,
+//         name: String,
+//         imageUrl: String,
+//         price: Number,
+//         // discount: String, // 'x%' or number
+//         quantity: Number
+//     }]
+// }, {
+//     timestamps: {
+//         createdAt: true,
+//         updatedAt: false
+//     }
+// })
+
+module.exports = mongoModelClient.createModel(order)

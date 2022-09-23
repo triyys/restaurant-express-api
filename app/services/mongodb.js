@@ -1,4 +1,4 @@
-const { createConnection } = require('mongoose')
+const { createConnection, Schema, SchemaTypes } = require('mongoose')
 const { mongodb: mongodbConfig } = require('../../config')
 
 const mongodb = createConnection(mongodbConfig.url)
@@ -11,4 +11,37 @@ const mongodb = createConnection(mongodbConfig.url)
     })
 })()
 
-module.exports = mongodb
+const typeMap = {
+    '_id': SchemaTypes.ObjectId,
+    'string': SchemaTypes.String,
+    'number': SchemaTypes.Number,
+    'boolean': SchemaTypes.Boolean,
+    'array': SchemaTypes.Array,
+    '[_id]': [SchemaTypes.ObjectId],
+    '[string]': [SchemaTypes.String],
+    'ref': SchemaTypes.Mixed,
+}
+
+class MongoAdapter {
+    getModel(config) {
+        const { modelName, attributes, options } = config
+
+        for (const [key, value] of Object.entries(attributes)) {
+            if (typeof value === 'object' && value != null) {
+                if (typeof value['type'] === 'string') {
+                    config.attributes[key]['type'] = typeMap[value['type']]
+                }
+            } else {
+                if (typeof value === 'string') {
+                    config.attributes[key] = typeMap[value]
+                }
+            }
+        }
+
+        return mongodb.model(modelName, new Schema(attributes, options))
+    }
+}
+
+module.exports = {
+    MongoAdapter,
+}

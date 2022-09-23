@@ -1,13 +1,24 @@
-const { Schema } = require('mongoose')
-const mongodb = require('../services/mongodb')
+const mongoModelClient = require('../services/mongoModelClient')
 
-const Option = new Schema({
-    name: String,
-    isMultiSelect: Boolean,
-    items: [{
-        name: String,
-        price: Number,
-    }],
-})
+const option = {
+    modelName: 'options',
+    attributes: {
+        name: {
+            type: 'string',
+            required: true,
+        },
+        isMultiSelect: {
+            type: 'boolean',
+            required: true,
+        },
+        items: [{
+            name: String,
+            price: Number,
+        }],
+    },
+    options: {
+        timestamps: true,
+    },
+}
 
-module.exports = mongodb.model('options', Option)
+module.exports = mongoModelClient.createModel(option)

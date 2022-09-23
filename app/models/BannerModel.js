@@ -1,13 +1,16 @@
-const { Schema } = require('mongoose')
-const mongodb = require('../services/mongodb')
 
-const Banner = new Schema({
-    imageUrls: [String]
-}, {
-    timestamps: {
-        createdAt: true,
-        updatedAt: false,
+const mongoModelClient = require('../services/mongoModelClient')
+
+const banner = {
+    modelName: 'banners',
+    attributes: {
+        imageUrls: {
+            type: '[string]',
+        },
     },
-})
+    options: {
+        timestamps: true,
+    },
+}
 
-module.exports = mongodb.model('banners', Banner)
+module.exports = mongoModelClient.createModel(banner)
