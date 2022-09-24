@@ -1,5 +1,4 @@
 const paypal = require('paypal-rest-sdk')
-const { success } = require('../responses')
 paypal.configure({
     'mode': 'sandbox', //sandbox or live
     'client_id': 'Aeqh_l1UeE4Qvrci_ZlGnJv_y7grEgOm1u6-crKl360QjRqR0llayoFxXTCcbI9wCze_O4BKKrAVdRZP',
@@ -42,13 +41,14 @@ const processPayment = (req, res) => {
     paypal.payment.create(data, function (error, payment) {
         if (error) {
             console.log(error)
-            res.redirect(FAILED_PAYMENT_URL)
-        } else {
-            const approvedViewUrl = payment.links.find(link => link.rel === 'approval_url').href
-            return res
-                .status(201)
-                .send(success({ d: approvedViewUrl }))
+            return res.redirect(FAILED_PAYMENT_URL)
         }
+
+        const approvedViewUrl = payment.links.find(link => link.rel === 'approval_url').href
+        return res
+            .location(approvedViewUrl)
+            .status(201)
+            .send(approvedViewUrl)
     })
 }
 
