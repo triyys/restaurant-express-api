@@ -10,7 +10,7 @@ function route(app) {
     app.use('/banners', bannersRouter)
     app.use('/foods', foodsRouter)
     app.use('/orders', verifyAccessToken, ordersRouter)
-    app.use('/payment', verifyAccessToken, paymentRouter)
+    app.use('/payment', paymentRouter)
 }
 
 module.exports = route
