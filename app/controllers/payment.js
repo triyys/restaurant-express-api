@@ -1,5 +1,6 @@
 const paypal = require('paypal-rest-sdk')
 const { clientUrl, paypalClientId, paypalClientSecret } = require('../../config')
+const TransactionModel = require('../models/TransactionModel')
 
 
 paypal.configure({
@@ -9,7 +10,7 @@ paypal.configure({
 })
 const FAILED_PAYMENT_URL = 'https://www.paypal.com/us/home'
 
-// [POST] /payment/process
+// [POST] /payment
 const processPayment = (req, res) => {
     const { amount, description } = req.body
     const data = {
@@ -18,7 +19,7 @@ const processPayment = (req, res) => {
             'payment_method': 'paypal'
         },
         'redirect_urls': {
-            'return_url': `${req.protocol}://${req.headers.host}/payment/success`,
+            'return_url': `${req.protocol}://${req.headers.host}/payment`,
             'cancel_url': FAILED_PAYMENT_URL,
         },
         'transactions': [
@@ -55,7 +56,7 @@ const processPayment = (req, res) => {
     })
 }
 
-// [GET] /payment/success
+// [GET] /payment
 const successPayment = (req, res) => {
     const { PayerID: payerId, paymentId } = req.query
 
@@ -73,7 +74,7 @@ const successPayment = (req, res) => {
                 .send("Something wrong have occured, please try again")
         }
 
-        console.log(payment.transactions)
+        TransactionModel.create(payment.transactions)
         return res.redirect(`${clientUrl}/success`)
     })
 }
