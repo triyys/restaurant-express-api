@@ -1,8 +1,11 @@
 const paypal = require('paypal-rest-sdk')
+const { clientUrl, paypalClientId, paypalClientSecret } = require('../../config')
+
+
 paypal.configure({
     'mode': 'sandbox', //sandbox or live
-    'client_id': 'Aeqh_l1UeE4Qvrci_ZlGnJv_y7grEgOm1u6-crKl360QjRqR0llayoFxXTCcbI9wCze_O4BKKrAVdRZP',
-    'client_secret': 'EAfIyBlyi-PvHXhgwPCMDUycFkj6Vm7jM-h-HHd1ErIc2qH_YUnZbI80UfALCvC8RhDU-jdWw0AEcrnv'
+    'client_id': paypalClientId,
+    'client_secret': paypalClientSecret,
 })
 const FAILED_PAYMENT_URL = 'https://www.paypal.com/us/home'
 
@@ -71,7 +74,7 @@ const successPayment = (req, res) => {
         }
 
         console.log(payment.transactions)
-        return res.redirect("http://localhost:3000/success")
+        return res.redirect(`${clientUrl}/success`)
     })
 }
 
