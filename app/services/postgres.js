@@ -1,7 +1,9 @@
 const { Sequelize, DataTypes } = require('sequelize')
 const { postgresql } = require('../../config')
 
-const postgres = new Sequelize(postgresql.url)
+const postgres = new Sequelize(postgresql.url, {
+    dialect: 'postgres',
+})
 
 ;(() => {
     postgres.authenticate()
