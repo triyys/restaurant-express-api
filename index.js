@@ -1,10 +1,15 @@
 const express = require('express')
 const cors = require('cors')
 const path = require('path')
+const moduleAlias = require('module-alias')
+moduleAlias.addAliases({
+    '@root': __dirname,
+    '@': path.join(__dirname, 'app'),
+})
 
-const route = require('./app/routes')
-const { inputLogger } = require('./app/middlewares')
-const ErrorHandler = require('./app/common/ErrorHandler')
+const route = require('@/routes')
+const { inputLogger } = require('@/middlewares')
+const ErrorHandler = require('@/common/ErrorHandler')
 const { port, cors: corsConfig } = require('./config')
 
 const app = express()

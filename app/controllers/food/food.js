@@ -1,7 +1,7 @@
-const FoodModel = require('../../models/FoodModel')
-const OptionModel = require('../../models/OptionModel')
-const { success } = require('../../responses')
-const { getMongoDocById } = require('../../utils')
+const FoodModel = require('@/models/FoodModel')
+const OptionModel = require('@/models/OptionModel')
+const { success } = require('@/responses')
+const { getMongoDocById } = require('@/utils')
 
 // [GET] /foods/:id
 const getFoodById = getMongoDocById(FoodModel)

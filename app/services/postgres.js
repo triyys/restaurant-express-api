@@ -1,5 +1,5 @@
 const { Sequelize, DataTypes } = require('sequelize')
-const { postgresql } = require('../../config')
+const { postgresql } = require('@root/config')
 
 const postgres = new Sequelize(postgresql.url, {
     dialect: postgresql.dialect,

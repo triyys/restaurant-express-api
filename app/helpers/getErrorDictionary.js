@@ -1,4 +1,4 @@
-const ErrorDict = require('../models/ErrorDict')
+const ErrorDict = require('@/models/ErrorDict')
 
 const getErrorDictionary = async () => {
     try {

@@ -1,5 +1,5 @@
 
-const mongoModelClient = require('../services/mongoModelClient')
+const mongoModelClient = require('@/services/mongoModelClient')
 
 const banner = {
     modelName: 'banners',

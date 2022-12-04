@@ -1,5 +1,5 @@
-const OrderModel = require('../../models/OrderModel')
-const { success } = require('../../responses')
+const OrderModel = require('@/models/OrderModel')
+const { success } = require('@/responses')
 
 // [PATCH] /orders/:id
 const updateStatus = function(req, res, next){

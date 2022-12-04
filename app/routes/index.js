@@ -1,4 +1,4 @@
-const { verifyAccessToken } = require('../middlewares')
+const { verifyAccessToken } = require('@/middlewares')
 const authsRouter = require('./auths')
 const bannersRouter = require('./banners')
 const foodsRouter = require('./foods')

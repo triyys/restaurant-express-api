@@ -1,5 +1,5 @@
 const { createConnection, Schema, SchemaTypes } = require('mongoose')
-const { mongodb: mongodbConfig } = require('../../config')
+const { mongodb: mongodbConfig } = require('@root/config')
 
 const mongodb = createConnection(mongodbConfig.url)
 

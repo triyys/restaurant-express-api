@@ -1,5 +1,5 @@
 const { isValidObjectId } = require("mongoose")
-const { failure } = require("../../responses")
+const { failure } = require("@/responses")
 
 const validateObjectId = (names) => {
     if (!Array.isArray(names)) names = [names]

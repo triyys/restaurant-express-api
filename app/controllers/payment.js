@@ -1,6 +1,6 @@
 const paypal = require('paypal-rest-sdk')
-const { clientUrl, paypalClientId, paypalClientSecret } = require('../../config')
-const TransactionModel = require('../models/TransactionModel')
+const { clientUrl, paypalClientId, paypalClientSecret } = require('@root/config')
+const TransactionModel = require('@/models/TransactionModel')
 
 
 paypal.configure({
