@@ -4,9 +4,9 @@ info:
   description: This is a simple API
   version: 1.0.0
 servers:
-- url: http://localhost:8080
+- url: http://localhost:8080/api/v1
   description: Local machine
-- url: https://restaurant-express-api.onrender.com
+- url: https://restaurant-express-api.onrender.com/api/v1
   description: Render
 security:
 - application:
@@ -14,23 +14,24 @@ security:
   - write
 paths:
   /foods:
+    get:
+      summary: Get foods
+      tags:
+        - Food
+      description: Get foods with sorting, paginating
+      responses:
+        200:
+          description: An array of resources
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/FoodsResponse'
     post:
-      summary: Món ăn
-      operationId: foods
+      summary: Create food
       tags:
         - Food
       description: Món ăn
-      parameters:
-        - $ref: '#/components/parameters/requestId'
-        - in: header
-          name: x-lang
-          description: Ngôn ngữ
-          required: true
-          schema:
-            type: string
-            enum: 
-            - vi
-            - en
       requestBody:
         required: true
         content:
@@ -42,75 +43,6 @@ paths:
                   description: Mã CK
                   type: string
                   example: ACB
-                qty:
-                  description: Khối luợng
-                  type: number
-                  example: 1
-                side:
-                  description: Mua bán
-                  type: string
-                  enum:
-                    - buy
-                    - sell
-                  example: buy
-                type:
-                  description: Loại lệnh
-                  type: string
-                  enum:
-                    - LO
-                    - ATO
-                    - ATC
-                    - MP
-                    - MTL
-                    - MOK
-                    - MAK
-                  example: LO
-                limitPrice:
-                  description: Giá
-                  type: number
-                  example: 7000
-                stopPrice:
-                  description: Giá stop (nếu có).
-                  type: number
-                durationType:
-                  description: Loại thời gian (nếu có).
-                  type: string
-                  example: gtt
-                durationDateTime:
-                  description: Thời hạn UNIX timestamp (nếu có dùng durationType).
-                  type: number
-                  example: 1548406235
-                stopLoss:
-                  description: Giá cắt lỗ (nếu có).
-                  type: number
-                takeProfit:
-                  description: Giá chốt lời (nếu có).
-                  type: number
-                digitalSignature:
-                  description: CKS (nếu có).
-                  type: string
-                  example: 954345868
-                timetype:
-                  description: loại lệnh (T -> lệnh thuườg, G -> lệnh dk)
-                  type: string
-                  enum:
-                    - T
-                    - G
-                splitval:
-                  description: Khối lượng chia
-                  type: number
-                effdate: 
-                  description: Ngày hiệu lực
-                  type: string
-                expdate:
-                  description: Ngày hết hiệu lực
-                  type: string
-              required:
-                - instrument
-                - qty
-                - side
-                - type
-                - timetype
       responses:
         200:
           description: PostOrderResponse
@@ -121,30 +53,52 @@ paths:
                   - $ref: '#/components/schemas/Status'
       security:
       - accessCode: []
+  /foods/{id}:
+    get:
+      summary: Get a food
+      tags:
+        - Food
+      description: Get a specific food
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        200:
+          description: A object of resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FoodModel'
 components:
   schemas:
-    Status:
-      type: string
-      enum:
-      - ok
-      - error
+    FoodsResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/FoodModel'
+    FoodModel:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: generated uid by mongodb
+        name:
+          type: string
+          description: food name
   parameters:
-    requestId:
-      name: requestId
-      in: query
-      description: Unique identifier for a request.
-      required: false
-      style: form
-      explode: true
-      schema:
-        type: string
-      example: 23425678343
+    id:
+      name: id
+      in: path
+      description: uid for a resource
+      required: true
+      style: simple
+      explode: false
+      type: string
+      example: 638cc316c821bc6123fe28ed
   securitySchemes:
     accessCode:
       type: oauth2
       flows:
         password:
-          tokenUrl: 'https://restaurant-express-api.onrender.com/login'
+          tokenUrl: 'https://restaurant-express-api.onrender.com/api/v1/login'
           scopes:
             account-read: account-read
             account-write: account-write
