@@ -1,5 +1,6 @@
 const express = require('express')
 const cors = require('cors')
+const path = require('path')
 
 const route = require('./app/routes')
 const { inputLogger } = require('./app/middlewares')
@@ -10,9 +11,14 @@ const app = express()
 
 // Use initial middlewares
 app.use(cors(corsConfig))
-app.use(express.urlencoded({extended: true}))
+app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(inputLogger(console))
+app.use(
+    '/api/docs/swagger',
+    (req, res) => res.redirect('/swagger')
+)
 
 // Routes init
 route(app)
