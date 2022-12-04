@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken')
-const { jwtSecret } = require('../../config')
-const { failure } = require('../responses')
+const { jwtSecret } = require('@root/config')
+const { failure } = require('@/responses')
 
 const verifyAccessToken = (req, res, next) => {
     const authorization = req.header('Authorization')

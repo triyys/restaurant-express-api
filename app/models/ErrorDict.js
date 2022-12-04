@@ -1,4 +1,4 @@
-const postgresModelClient = require('../services/postgresModelClient')
+const postgresModelClient = require('@/services/postgresModelClient')
 
 const errorDict = {
     modelName: 'errordict',

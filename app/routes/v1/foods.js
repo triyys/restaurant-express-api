@@ -12,13 +12,13 @@ const {
     getOptionById,
     getCartItems,
     getTopOrderedFoods,
-} = require('../controllers/food')
+} = require('@/controllers/food')
 const {
     validateRequestBody,
     validateQuery,
     verifyAccessToken,
     validateObjectId,
-} = require('../middlewares')
+} = require('@/middlewares')
 
 
 router.get('/options', getAllOptions)

@@ -1,0 +1,104 @@
+openapi: 3.0.0
+info:
+  title: Express API for Foodmaze
+  description: This is a simple API
+  version: 1.0.0
+servers:
+- url: http://localhost:8080/api/v1
+  description: Local machine
+- url: https://restaurant-express-api.onrender.com/api/v1
+  description: Render
+security:
+- application:
+  - read
+  - write
+paths:
+  /foods:
+    get:
+      summary: Get foods
+      tags:
+        - Food
+      description: Get foods with sorting, paginating
+      responses:
+        200:
+          description: An array of resources
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/FoodsResponse'
+    post:
+      summary: Create food
+      tags:
+        - Food
+      description: Món ăn
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                instrument:
+                  description: Mã CK
+                  type: string
+                  example: ACB
+      responses:
+        200:
+          description: PostOrderResponse
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/Status'
+      security:
+      - accessCode: []
+  /foods/{id}:
+    get:
+      summary: Get a food
+      tags:
+        - Food
+      description: Get a specific food
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        200:
+          description: A object of resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FoodModel'
+components:
+  schemas:
+    FoodsResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/FoodModel'
+    FoodModel:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: generated uid by mongodb
+        name:
+          type: string
+          description: food name
+  parameters:
+    id:
+      name: id
+      in: path
+      description: uid for a resource
+      required: true
+      style: simple
+      explode: false
+      type: string
+      example: 638cc316c821bc6123fe28ed
+  securitySchemes:
+    accessCode:
+      type: oauth2
+      flows:
+        password:
+          tokenUrl: 'https://restaurant-express-api.onrender.com/api/v1/login'
+          scopes:
+            account-read: account-read
+            account-write: account-write

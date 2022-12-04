@@ -1,5 +1,5 @@
-const OrderModel = require('../../models/OrderModel')
-const FoodModel = require('../../models/FoodModel')
+const OrderModel = require('@/models/OrderModel')
+const FoodModel = require('@/models/FoodModel')
 
 // [GET] /foods/top-food?count={int}
 const getTopOrderedFoods = function(req, res, next) {

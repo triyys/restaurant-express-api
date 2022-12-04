@@ -1,4 +1,4 @@
-const getErrorDictionary = require("../helpers/getErrorDictionary")
+const getErrorDictionary = require("@/helpers/getErrorDictionary")
 
 let errorDict = {}
 

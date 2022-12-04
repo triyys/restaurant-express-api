@@ -1,16 +1,16 @@
-const { verifyAccessToken } = require('../middlewares')
-const authsRouter = require('./auths')
-const bannersRouter = require('./banners')
-const foodsRouter = require('./foods')
-const ordersRouter = require('./orders')
-const paymentRouter = require('./payment')
+const v1 = require('./v1')
 
 function route(app) {
-    app.use('/auths', authsRouter)
-    app.use('/banners', bannersRouter)
-    app.use('/foods', foodsRouter)
-    app.use('/orders', verifyAccessToken, ordersRouter)
-    app.use('/payment', paymentRouter)
+    app.use('/api/v1', v1)
+
+    // Api documents
+    app.use('/api/docs/swagger', (req, res) => res.redirect('/swagger'))
+
+    // Default error handler
+    app.use((error, req, res, next) => {
+        console.log(`Caught the error: ${error}`)
+        return res.status(500).send(error.toString())
+    })
 }
 
 module.exports = route

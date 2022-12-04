@@ -1,5 +1,5 @@
-const OptionModel = require('../../models/OptionModel')
-const { getMongoDocById } = require('../../utils')
+const OptionModel = require('@/models/OptionModel')
+const { getMongoDocById } = require('@/utils')
 
 // [GET] /foods/options
 const getAllOptions = (req, res, next) => {

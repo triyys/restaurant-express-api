@@ -1,6 +1,6 @@
-const OrderModel = require('../../models/OrderModel')
-const { success } = require('../../responses')
-const { getMongoDocById } = require('../../utils')
+const OrderModel = require('@/models/OrderModel')
+const { success } = require('@/responses')
+const { getMongoDocById } = require('@/utils')
 
 // [GET] /orders
 const getAllOrder = (req, res, next) => {

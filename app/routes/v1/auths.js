@@ -1,8 +1,8 @@
 const express = require('express')
 const router = express.Router()
-const { signIn, signUp } = require('../controllers/auth')
-const { validateRequestBody } = require('../middlewares')
-const { useError } = require('../utils')
+const { signIn, signUp } = require('@/controllers/auth')
+const { validateRequestBody } = require('@/middlewares')
+const { useError } = require('@/utils')
 
 router.post(
     '/login',

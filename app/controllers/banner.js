@@ -1,6 +1,6 @@
-const BannerModel = require('../models/BannerModel')
-const { success } = require('../responses')
-const { getMongoDocById, getMongoCollection } = require('../utils')
+const BannerModel = require('@/models/BannerModel')
+const { success } = require('@/responses')
+const { getMongoDocById, getMongoCollection } = require('@/utils')
 
 // [GET] /banners/:id
 const getBannerById = getMongoDocById(BannerModel)

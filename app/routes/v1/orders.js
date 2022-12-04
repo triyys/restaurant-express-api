@@ -6,8 +6,8 @@ const {
     getAllOrder,
     getOrderById,
     updateStatusAll
-} = require('../controllers/order')
-const { validateRequestBody } = require('../middlewares')
+} = require('@/controllers/order')
+const { validateRequestBody } = require('@/middlewares')
 
 
 router.post(

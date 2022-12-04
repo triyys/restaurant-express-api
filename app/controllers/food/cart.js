@@ -1,4 +1,4 @@
-const FoodModel = require('../../models/FoodModel')
+const FoodModel = require('@/models/FoodModel')
 const { ObjectId } = require('mongoose').Types
 
 const getCartItems = (req, res, next) => {
