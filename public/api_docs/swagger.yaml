@@ -9,9 +9,9 @@ servers:
 - url: https://restaurant-express-api.onrender.com/api/v1
   description: Render
 security:
-- application:
-  - read
-  - write
+  - accessCode:
+    - read
+    - write
 paths:
   /foods:
     get:
@@ -44,13 +44,13 @@ paths:
                   type: string
                   example: ACB
       responses:
-        200:
+        201:
           description: PostOrderResponse
           content:
             application/json:
               schema:
                 oneOf:
-                  - $ref: '#/components/schemas/Status'
+                  - $ref: '#/components/schemas/FoodsResponse'
       security:
       - accessCode: []
   /foods/{id}:
@@ -91,7 +91,8 @@ components:
       required: true
       style: simple
       explode: false
-      type: string
+      schema:
+        type: string
       example: 638cc316c821bc6123fe28ed
   securitySchemes:
     accessCode:
