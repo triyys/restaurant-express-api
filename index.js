@@ -1,6 +1,8 @@
 const express = require('express')
 const cors = require('cors')
 const path = require('path')
+
+// Module alias config
 const moduleAlias = require('module-alias')
 moduleAlias.addAliases({
     '@root': __dirname,
@@ -20,19 +22,9 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(inputLogger(console))
-app.use(
-    '/api/docs/swagger',
-    (req, res) => res.redirect('/swagger')
-)
 
 // Routes init
 route(app)
-
-// Default error handler
-app.use((error, req, res, next) => {
-    console.log(`Caught the error: ${error}`)
-    return res.status(500).send(error.toString())
-})
 
 app.listen(port, async () => {
     console.log(`Server is running on port ${port}.`)
