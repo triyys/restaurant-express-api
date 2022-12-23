@@ -4,14 +4,14 @@ info:
   description: This is a simple API
   version: 1.0.0
 servers:
-- url: http://localhost:8080/api/v1
-  description: Local machine
-- url: https://restaurant-express-api.onrender.com/api/v1
-  description: Render
+  - url: http://localhost:8080/api/v1
+    description: Local machine
+  - url: https://restaurant-express-api.onrender.com/api/v1
+    description: Render
 security:
   - accessCode:
-    - read
-    - write
+      - read
+      - write
 paths:
   /foods:
     get:
@@ -20,7 +20,7 @@ paths:
         - Food
       description: Get foods with sorting, paginating
       responses:
-        200:
+        '200':
           description: An array of resources
           content:
             application/json:
@@ -31,28 +31,14 @@ paths:
       summary: Create food
       tags:
         - Food
-      description: Món ăn
+      description: Create a food
       requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                instrument:
-                  description: Mã CK
-                  type: string
-                  example: ACB
+        $ref: '#/components/requestBodies/CreateFoodBody'
       responses:
-        201:
-          description: PostOrderResponse
-          content:
-            application/json:
-              schema:
-                oneOf:
-                  - $ref: '#/components/schemas/FoodsResponse'
+        '201':
+          $ref: '#/components/responses/201Created'
       security:
-      - accessCode: []
+        - accessCode: []
   /foods/{id}:
     get:
       summary: Get a food
@@ -62,14 +48,138 @@ paths:
       parameters:
         - $ref: '#/components/parameters/id'
       responses:
-        200:
+        '200':
           description: A object of resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FoodModel'
+  /orders:
+    get:
+      summary: Get orders
+      tags:
+        - Order
+      description: Get all orders
+      responses:
+        '200':
+          description: An array of resources
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/FoodsResponse'
+    post:
+      summary: Create order
+      tags:
+        - Order
+      description: Create an order
+      requestBody:
+        $ref: '#/components/requestBodies/CreateOrderBody'
+      responses:
+        '201':
+          $ref: '#/components/responses/201Created'
+      security:
+        - accessCode: []
+  /orders/{id}:
+    get:
+      summary: Get an order
+      tags:
+        - Order
+      description: Get a specific food
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: A object of resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FoodModel'
+  /banners:
+    get:
+      summary: Get banners
+      tags:
+        - Banner
+      description: Get all banners
+      responses:
+        '200':
+          description: An array of resource
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/FoodModel'
 components:
   schemas:
+    FoodBody:
+      type: object
+      properties:
+        name:
+          description: food name
+          type: string
+          example: 'Bánh xèo'
+        price:
+          description: food list price
+          type: number
+          example: 10000
+        discount:
+          description: food discount by percent or amount
+          type: string
+          example: '10%'
+        imageUrls:
+          description: list food image
+          type: array
+          items:
+            type: string
+          example: ['https://phanphoiruounhapkhau.com/wp-content/uploads/2021/04/healthy-food-la-gi-nguyen-tac-khi-giam-can-bang-che-do-an-clean-eating.jpg']
+        description:
+          description: food description
+          type: string
+        optionIds:
+          description: food discount by percent or amount
+          type: array
+          items:
+            type: string
+          example: ['638cc316c821bc6123fe28ed']
+        type:
+          description: food combo
+          type: string
+          example: 'Combo'
+      required:
+        - name
+        - price
+    OrderBody:
+      type: object
+      properties:
+        customerInfo:
+          description: object that contains customer info values
+          type: object
+          example: { name: 'Messi', address: 'Argentina' }
+        shipFee:
+          description: order ship fee
+          type: number
+          example: 10000
+        status:
+          description: order status
+          type: string
+          enum:
+            - 'Đang chờ xử lý'
+            - 'Đang được làm'
+            - 'Đang giao hàng'
+            - 'Đã giao'
+            - 'Đã hoàn thành'
+            - 'Đã từ chối'
+          example: 'Đang chờ xử lý'
+        items:
+          description: list order item
+          type: array
+          items:
+            type: object
+          example: [{ name: 'Bánh xèo' }, { name: 'Cua' }]
+      required:
+        - customerInfo
+        - shipFee
+        - status
+        - items
     FoodsResponse:
       type: array
       items:
@@ -83,6 +193,17 @@ components:
         name:
           type: string
           description: food name
+    Success201Response:
+      type: object
+      properties:
+        status:
+          type: string
+          description: status will always be s
+          example: 's'
+        message:
+          type: string
+          description: message will always be ok
+          example: 'ok'
   parameters:
     id:
       name: id
@@ -93,7 +214,29 @@ components:
       explode: false
       schema:
         type: string
-      example: 638cc316c821bc6123fe28ed
+      example: '638cc316c821bc6123fe28ed'
+  requestBodies:
+    CreateFoodBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/FoodBody'
+    CreateOrderBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OrderBody'
+  responses:
+    204NoContent:
+      description: 204 http status code
+    201Created:
+      description: 201 http status code
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Success201Response'
   securitySchemes:
     accessCode:
       type: oauth2
