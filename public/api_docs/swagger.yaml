@@ -19,6 +19,10 @@ paths:
       tags:
         - Food
       description: Get foods with sorting, paginating
+      parameters:
+        - $ref: '#/components/parameters/sort'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
       responses:
         '200':
           description: An array of resources
@@ -39,12 +43,67 @@ paths:
           $ref: '#/components/responses/201Created'
       security:
         - accessCode: []
+  /foods/count:
+    get:
+      summary: Get food count
+      tags:
+        - Food
+      description: Get food count with filtering
+      parameters:
+        - $ref: '#/components/parameters/sort'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+      responses:
+        '200':
+          description: An array of resources
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/FoodsResponse'
   /foods/{id}:
+    parameters:
+      - $ref: '#/components/parameters/id'
     get:
       summary: Get a food
       tags:
         - Food
       description: Get a specific food
+      responses:
+        '200':
+          description: A object of resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FoodModel'
+    put:
+      summary: Update food
+      tags:
+        - Food
+      description: Update a food
+      requestBody:
+        $ref: '#/components/requestBodies/CreateFoodBody'
+      responses:
+        '204':
+          $ref: '#/components/responses/204NoContent'
+      security:
+        - accessCode: []
+    delete:
+      summary: Delete food
+      tags:
+        - Food
+      description: Delete a food
+      responses:
+        '204':
+          $ref: '#/components/responses/204NoContent'
+      security:
+        - accessCode: []
+  /foods/{id}/detail:
+    get:
+      summary: Get a food detail
+      tags:
+        - Food
+      description: Get a specific food detail
       parameters:
         - $ref: '#/components/parameters/id'
       responses:
@@ -80,14 +139,54 @@ paths:
           $ref: '#/components/responses/201Created'
       security:
         - accessCode: []
+  /orders/status:
+    post:
+      summary: Update order status
+      tags:
+        - Order
+      description: Update all order status
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                selectedStatus:
+                  description: order status to update
+                  type: string
+                  enum:
+                    - 'Đang chờ xử lý'
+                    - 'Đang được làm'
+                    - 'Đang giao hàng'
+                    - 'Đã giao'
+                    - 'Đã hoàn thành'
+                    - 'Đã từ chối'
+                  example: 'Đang chờ xử lý'
+                newStatus:
+                  description: new order status
+                  type: string
+                  enum:
+                    - 'Đang chờ xử lý'
+                    - 'Đang được làm'
+                    - 'Đang giao hàng'
+                    - 'Đã giao'
+                    - 'Đã hoàn thành'
+                    - 'Đã từ chối'
+                  example: 'Đang chờ xử lý'
+      responses:
+        '201':
+          $ref: '#/components/responses/201Created'
+      security:
+        - accessCode: []
   /orders/{id}:
+    parameters:
+    - $ref: '#/components/parameters/id'
     get:
       summary: Get an order
       tags:
         - Order
       description: Get a specific food
-      parameters:
-        - $ref: '#/components/parameters/id'
       responses:
         '200':
           description: A object of resource
@@ -95,6 +194,34 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/FoodModel'
+    patch:
+      summary: Update order status
+      tags:
+        - Order
+      description: Update an order status
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  description: order status
+                  type: string
+                  enum:
+                    - 'Đang chờ xử lý'
+                    - 'Đang được làm'
+                    - 'Đang giao hàng'
+                    - 'Đã giao'
+                    - 'Đã hoàn thành'
+                    - 'Đã từ chối'
+                  example: 'Đang chờ xử lý'
+      responses:
+        '204':
+          $ref: '#/components/responses/204NoContent'
+      security:
+        - accessCode: []
   /banners:
     get:
       summary: Get banners
@@ -107,7 +234,19 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FoodModel'
+                $ref: '#/components/schemas/BannersResponse'
+    post:
+      summary: Create banner
+      tags:
+        - Banner
+      description: Create a banner
+      requestBody:
+        $ref: '#/components/requestBodies/CreateBannerBody'
+      responses:
+        '201':
+          $ref: '#/components/responses/201Created'
+      security:
+        - accessCode: []
 components:
   schemas:
     FoodBody:
@@ -180,19 +319,76 @@ components:
         - shipFee
         - status
         - items
+    BannerBody:
+      type: object
+      properties:
+        imageUrls:
+          description: list image url
+          type: array
+          items:
+            type: string
+          example: ['https://i.ytimg.com/vi/wQ1izFeSWkc/maxresdefault.jpg']
+      required:
+        - imageUrls
     FoodsResponse:
       type: array
       items:
         $ref: '#/components/schemas/FoodModel'
+    BannersResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/BannerModel'
     FoodModel:
       type: object
       properties:
         _id:
-          type: string
           description: generated uid by mongodb
-        name:
           type: string
+          example: '638cc316c821bc6123fe28ed'
+        name:
           description: food name
+          type: string
+          example: 'Bánh xèo'
+        price:
+          description: food list price
+          type: number
+          example: 10000
+        discount:
+          description: food discount by percent or amount
+          type: string
+          example: '10%'
+        imageUrls:
+          description: list food image
+          type: array
+          items:
+            type: string
+          example: ['https://phanphoiruounhapkhau.com/wp-content/uploads/2021/04/healthy-food-la-gi-nguyen-tac-khi-giam-can-bang-che-do-an-clean-eating.jpg']
+        description:
+          description: food description
+          type: string
+        optionIds:
+          description: food discount by percent or amount
+          type: array
+          items:
+            type: string
+          example: ['638cc316c821bc6123fe28ed']
+        type:
+          description: food combo
+          type: string
+          example: 'Combo'
+    BannerModel:
+      type: object
+      properties:
+        _id:
+          description: generated uid by mongodb
+          type: string
+          example: '638cc316c821bc6123fe28ed'
+        imageUrls:
+          description: list image url
+          type: array
+          items:
+            type: string
+          example: ['https://i.ytimg.com/vi/wQ1izFeSWkc/maxresdefault.jpg']
     Success201Response:
       type: object
       properties:
@@ -215,6 +411,30 @@ components:
       schema:
         type: string
       example: '638cc316c821bc6123fe28ed'
+    sort:
+      name: sort
+      in: query
+      description: choose sort mode
+      explode: false
+      schema:
+        type: string
+      example: 'asc'
+    limit:
+      name: limit
+      in: query
+      description: choose sort mode
+      explode: false
+      schema:
+        type: number
+      example: 10
+    offset:
+      name: offset
+      in: query
+      description: choose sort mode
+      explode: false
+      schema:
+        type: number
+      example: 2
   requestBodies:
     CreateFoodBody:
       required: true
@@ -228,15 +448,23 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/OrderBody'
+    CreateBannerBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BannerBody'
   responses:
     204NoContent:
-      description: 204 http status code
+      description: general 204 no content HTTP status code
     201Created:
-      description: 201 http status code
+      description: general 201 created HTTP status code
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Success201Response'
+    500InternalServerError:
+      description: general 500 internal server HTTP status code
   securitySchemes:
     accessCode:
       type: oauth2

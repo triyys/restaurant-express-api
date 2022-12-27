@@ -110,7 +110,6 @@ module.exports = {
     getFoodDetailById,
     getOnlyFoodCount,
     getAllFood,
-    getAllFood,
     createFood,
     updateFood,
     deleteFood,
