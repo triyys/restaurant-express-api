@@ -19,7 +19,7 @@ const processPayment = (req, res) => {
             'payment_method': 'paypal'
         },
         'redirect_urls': {
-            'return_url': `${req.protocol}://${req.headers.host}/payment`,
+            'return_url': `${req.protocol}://${req.headers.host}${req.originalUrl}`,
             'cancel_url': FAILED_PAYMENT_URL,
         },
         'transactions': [
