@@ -4,12 +4,18 @@ const order = {
     modelName: 'orders',
     attributes: {
         customerInfo: 'ref',
-        shipFee: 'number',
+        shipFee: {
+            type: 'number',
+            required: true,
+        },
         status: {
             type: 'string',
             default: 'Đang chờ xử lý',
         },
-        items: 'ref',
+        items: {
+            type: '[ref]',
+            required: true,
+        },
     },
     options: {
         timestamps: true,

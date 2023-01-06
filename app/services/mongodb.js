@@ -17,9 +17,10 @@ const typeMap = {
     'number': SchemaTypes.Number,
     'boolean': SchemaTypes.Boolean,
     'array': SchemaTypes.Array,
+    'ref': SchemaTypes.Mixed,
     '[_id]': [SchemaTypes.ObjectId],
     '[string]': [SchemaTypes.String],
-    'ref': SchemaTypes.Mixed,
+    '[ref]': [SchemaTypes.Mixed],
 }
 
 class MongoAdapter {
