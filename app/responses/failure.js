@@ -4,7 +4,7 @@ const failure = (data, language = 'vi') => {
     const { errcode, ...restData } = data
     return {
         status: 'e',
-        message: ErrorHandler.getErrorMessageByCode(errcode, language),
+        message: `${errcode} ${ErrorHandler.getErrorMessageByCode(errcode, language)}`,
         ...restData,
     }
 }
