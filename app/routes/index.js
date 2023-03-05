@@ -1,6 +1,8 @@
+const oauth2 = require('./oauth2')
 const v1 = require('./v1')
 
 function route(app) {
+    app.use('/oauth2', oauth2)
     app.use('/api/v1', v1)
 
     // Api documents
