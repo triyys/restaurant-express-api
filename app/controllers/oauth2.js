@@ -1,6 +1,6 @@
 const axios = require('@/services/axios')
 const { oauth2ClientId, oauth2ClientSecret, clientUrl } = require('@root/config')
-const { failure } = require('../responses')
+const { failure } = require('@/responses')
 
 const exchangeCodeForToken = async (req, res, next) => {
     axios.post('/v2/oauth/token', {
