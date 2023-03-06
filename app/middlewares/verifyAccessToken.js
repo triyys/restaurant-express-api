@@ -1,8 +1,9 @@
-const jwt = require('jsonwebtoken')
-const { jwtSecret } = require('@root/config')
+// const jwt = require('jsonwebtoken')
+// const { jwtSecret } = require('@root/config')
 const { failure } = require('@/responses')
+const checkAccessToken = require('../helpers/checkAccessToken')
 
-const verifyAccessToken = (req, res, next) => {
+const verifyAccessToken = async (req, res, next) => {
     const authorization = req.header('Authorization')
     if (!authorization) {
         return res.status(401).send(failure({ errcode: '-7' }))
@@ -11,11 +12,16 @@ const verifyAccessToken = (req, res, next) => {
     const [type, accessToken] = authorization.split(' ')
     if (type === 'Bearer') {
         try {
-            const decoded = jwt.verify(accessToken, jwtSecret)
-            req.userId = decoded.userId
-            next()
+            // const decoded = jwt.verify(accessToken, jwtSecret)
+            const username = await checkAccessToken(accessToken)
+            
+            if (username) {
+                req.username = username
+                next()
+            }
+            else throw new Error('verifyAccessToken failed')
         } catch (error) {
-            console.log(error.message)
+            console.error(error.toString())
             return res.status(403).send(failure({ errcode: '-8' }))
         }
     }
