@@ -9,8 +9,7 @@ const exchangeCodeForToken = async (req, res, next) => {
         code: req.query.code,
     })
         .then((response) => {
-            // return res.redirect(`${clientUrl}/login`)
-            return res.status(response.status).send(response.data)
+            return res.redirect(`${clientUrl}/login?token=${response.data.access_token}`)
         })
         .catch((error) => {
             return res.status(401).send(failure({ errcode: '-8' }))
