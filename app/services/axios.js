@@ -8,7 +8,7 @@ const instance = axios.default.create({
 
 instance.interceptors.request.use((request) => {
     console.log(`External API call: [${request.method.toUpperCase()}] ${request.baseURL}${request.url}`)
-    console.log(request.data)
+    console.log(`with data: ${request.data}`)
 
     return request
 }, (error) => {
