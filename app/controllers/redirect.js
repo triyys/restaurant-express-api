@@ -4,6 +4,7 @@ const { failure } = require('@/responses')
 
 const exchangeCodeForToken = async (req, res, next) => {
     axios.post('/v2/oauth/token', {
+        grant_type: 'authorization_code',
         client_id: oauth2ClientId,
         client_secret: oauth2ClientSecret,
         code: req.query.code,
