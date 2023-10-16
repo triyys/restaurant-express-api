@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon --inspect index.js",
-    "test": "jest --watchAll"
+    "test": "jest --watchAll --detectOpenHandles"
   },
   "engines": {
     "node": "16.17.1"

@@ -13,6 +13,8 @@ const route = require('@/routes')
 const { inputLogger } = require('@/middlewares')
 const ErrorHandler = require('@/common/ErrorHandler')
 const { port, cors: corsConfig } = require('./config')
+const postgres = require('@/services/postgres')
+const mongodb = require('@/services/mongodb')
 
 const app = express()
 
@@ -29,6 +31,8 @@ route(app)
 app.listen(port, async () => {
     console.log(`Server is running on port ${port}.`)
     try {
+        await mongodb.connect()
+        await postgres.connect()
         await ErrorHandler.loadErrorDictionary()
         console.log('All data loaded')
     } catch (error) {

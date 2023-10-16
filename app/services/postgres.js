@@ -5,16 +5,15 @@ const postgres = new Sequelize(postgresql.url, {
     dialect: postgresql.dialect,
 })
 
-;(() => {
-    postgres.authenticate()
-        .then(() => {
-            console.log('PostgreSQL is connected successfully')
-        })
-        .catch((error) => {
-            console.log('Cannot connect to PostgreSQL')
-            console.log(error)
-        })
-})()
+const connect = async () => {
+    try {
+        await postgres.authenticate()
+        console.log('PostgreSQL is connected successfully')
+    } catch (error) {
+        console.log('Cannot connect to PostgreSQL')
+        console.log(error)
+    }
+}
 
 const typeMap = {
     'string': DataTypes.STRING,
@@ -35,4 +34,5 @@ class PostgresAdapter {
 
 module.exports = {
     PostgresAdapter,
+    connect,
 }

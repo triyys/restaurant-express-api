@@ -1,15 +1,18 @@
-const { createConnection, Schema, SchemaTypes } = require('mongoose')
+const { Schema, SchemaTypes, connect: connectMongo, model } = require('mongoose')
 const { mongodb: mongodbConfig } = require('@root/config')
 
-const mongodb = createConnection(mongodbConfig.url)
-
-;(() => {
-    mongodb.on('connected', () => console.log('MongoDB is connected successfully'))
-    mongodb.on('error', (error) => {
+const connect = async () => {
+    try {
+        await connectMongo(mongodbConfig.url, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        })
+        console.log('MongoDB is connected successfully')
+    } catch (error) {
         console.log('Cannot connect to MongoDB')
         console.log(error)
-    })
-})()
+    }
+}
 
 const typeMap = {
     '_id': SchemaTypes.ObjectId,
@@ -39,10 +42,11 @@ class MongoAdapter {
             }
         }
 
-        return mongodb.model(modelName, new Schema(attributes, options))
+        return model(modelName, new Schema(attributes, options))
     }
 }
 
 module.exports = {
     MongoAdapter,
+    connect,
 }
