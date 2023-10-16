@@ -6,7 +6,7 @@ const { Model } = require("mongoose")
  * @returns A callback function
  */
 const getMongoDocById = (model) => (req, res, next) => {
-    model.findById(req.params.id)
+    return model.findById(req.params.id)
         .then((doc) => {
             return res.status(200).send(doc)
         })

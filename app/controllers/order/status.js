@@ -6,7 +6,7 @@ const updateStatus = function(req, res, next){
     const { id } = req.params
     const { status } = req.body
 
-    OrderModel.findByIdAndUpdate({ _id: id }, { status })
+    return OrderModel.findByIdAndUpdate({ _id: id }, { status })
         .then(() => res.status(204).send())
         .catch(next)
 }
@@ -14,7 +14,7 @@ const updateStatus = function(req, res, next){
 // [POST] /orders/status
 const updateStatusAll = function(req, res, next){
     const { selectedStatus, newStatus } = req.body
-    OrderModel
+    return OrderModel
         .updateMany({ status: selectedStatus }, { status: newStatus })
         .then((data) => {
             const { matchedCount, modifiedCount } = data

@@ -10,7 +10,7 @@ const getCartItems = (req, res, next) => {
     .filter(id => ObjectId.isValid(id))
     .map(value => ObjectId(value.toString()))
 
-    FoodModel.find({"_id": { $in: foodIds }}, {'optionIds': false})
+    return FoodModel.find({"_id": { $in: foodIds }}, {'optionIds': false})
         .then((foods) => {
             return res.status(200).send(foods)
         })

@@ -4,7 +4,7 @@ const FoodModel = require('@/models/FoodModel')
 // [GET] /foods/top-food?count={int}
 const getTopOrderedFoods = function(req, res, next) {
     const { count } = req.query
-    OrderModel
+    return OrderModel
         .aggregate()
         .project({_id: 0, items: 1})
         .unwind('items')

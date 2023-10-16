@@ -9,7 +9,7 @@ const getFoodById = getMongoDocById(FoodModel)
 // [GET] /foods/:id/detail
 const getFoodDetailById = (req, res, next) => {
     const { id } = req.params
-    FoodModel.findById(id)
+    return FoodModel.findById(id)
         .then((food) => {
             const foodDetail = food.toObject()
             foodDetail.images = foodDetail.imageUrls
@@ -50,7 +50,7 @@ const getFoodDetailById = (req, res, next) => {
 
 // [GET] /foods/count
 const getOnlyFoodCount = (req, res, next) => {
-    FoodModel.count(req.query)
+    return FoodModel.count(req.query)
         .then((count) => {
             return res.status(200).send(success({ count }))
         })
@@ -70,7 +70,7 @@ const getAllFood = (req, res, next) => {
     }
     query = query.limit(Number(limit) || 5)
 
-    query
+    return query
         .then((foods) => {
             return res.status(200).send(foods)
         })
@@ -79,7 +79,7 @@ const getAllFood = (req, res, next) => {
 
 // [POST] /foods
 const createFood = (req, res, next) => {
-    FoodModel.create(req.body)
+    return FoodModel.create(req.body)
         .then((food) => {
             return res
                 .location(`${req.originalUrl}/${food._id}`)
@@ -92,7 +92,7 @@ const createFood = (req, res, next) => {
 // [PUT] /foods/:id
 const updateFood = (req, res, next) => {
     const { id } = req.params
-    FoodModel.findByIdAndUpdate(id, { $set: req.body })
+    return FoodModel.findByIdAndUpdate(id, { $set: req.body })
         .then(() => res.status(204).send())
         .catch(next)
 }
@@ -100,7 +100,7 @@ const updateFood = (req, res, next) => {
 // [DELETE] /foods/:id
 const deleteFood = (req, res, next) => {
     const { id } = req.params
-    FoodModel.findByIdAndDelete(id)
+    return FoodModel.findByIdAndDelete(id)
         .then(() => res.status(204).send())
         .catch(next)
 }

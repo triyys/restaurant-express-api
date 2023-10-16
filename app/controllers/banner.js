@@ -11,7 +11,7 @@ const getAllBanners = getMongoCollection(BannerModel)
 // [POST] /banners
 const createBanner = (req, res, next) => {
     const { imageUrls } = req.body
-    BannerModel.create({ imageUrls })
+    return BannerModel.create({ imageUrls })
         .then((banner) => {
             return res
                 .location(`${req.originalUrl}/${banner._id}`)

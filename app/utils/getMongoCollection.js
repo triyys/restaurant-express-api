@@ -6,7 +6,7 @@ const { Model } = require("mongoose")
  * @returns A callback function
  */
 const getMongoCollection = (model) => (req, res, next) => {
-    model.find()
+    return model.find()
         .then((collection) => {
             return res.status(200).send(collection)
         })

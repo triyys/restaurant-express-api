@@ -36,3 +36,5 @@ app.listen(port, async () => {
         console.error('Failed to load app data')
     }
 })
+
+module.exports = app;
