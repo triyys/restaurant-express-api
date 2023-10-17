@@ -1,9 +1,9 @@
-const { createFood } = require('@/controllers/food');
-const FoodModel = require('@/models/FoodModel');
+const { createBanner } = require('@/controllers/banner');
+const BannerModel = require('@/models/BannerModel');
 const httpMocks = require('node-mocks-http');
-const food = require('../mock/food.json');
+const banner = require('@root/tests/mock/banner.json');
 
-FoodModel.create = jest.fn().mockImplementation(() => Promise.resolve(food));
+BannerModel.create = jest.fn().mockImplementation(() => Promise.resolve(banner));
 
 let req, res, next;
 beforeEach(() => {
@@ -11,26 +11,26 @@ beforeEach(() => {
     res = httpMocks.createResponse();
 });
 
-describe('Demo Test', () => {
+describe('Banner Controller Test', () => {
     beforeEach(() => {
-        req.body = food;
+        req.body = banner;
     });
     afterEach(() => {
         // test if the response is sent
         expect(res._isEndCalled()).toBeTruthy();
     });
-    it('should call FoodModel.create', async () => {
-        await createFood(req, res, next);
-        expect(FoodModel.create).toBeCalledWith(food);
+    it('should call BannerModel.create', async () => {
+        await createBanner(req, res, next);
+        expect(BannerModel.create).toBeCalledWith(banner);
     });
     it('should return 201 response code', async () => {
-        await createFood(req, res, next);
+        await createBanner(req, res, next);
         expect(res.statusCode).toBe(201);
     });
     it('should return json body in response', async () => {
-        FoodModel.create.mockResolvedValue(food);
+        BannerModel.create.mockResolvedValue(banner);
         res.location = jest.fn().mockImplementation(() => res);
-        await createFood(req, res, next);
+        await createBanner(req, res, next);
         expect(res.location).toBeCalledWith(expect.any(String));
         expect(res._getData()).toStrictEqual({ message: 'ok', status: 's' });
     });
