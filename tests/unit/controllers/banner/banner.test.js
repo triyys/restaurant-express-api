@@ -11,26 +11,23 @@ beforeEach(() => {
     res = httpMocks.createResponse();
 });
 
-describe('Banner Controller Test', () => {
-    beforeEach(() => {
+describe('createBanner Controller Test', () => {
+    beforeEach(async () => {
         req.body = banner;
+        res.location = jest.fn().mockImplementation(() => res);
+        await createBanner(req, res, next);
     });
     afterEach(() => {
         // test if the response is sent
         expect(res._isEndCalled()).toBeTruthy();
     });
-    it('should call BannerModel.create', async () => {
-        await createBanner(req, res, next);
+    it('should call BannerModel.create', () => {
         expect(BannerModel.create).toBeCalledWith(banner);
     });
-    it('should return 201 response code', async () => {
-        await createBanner(req, res, next);
+    it('should return 201 response code', () => {
         expect(res.statusCode).toBe(201);
     });
-    it('should return json body in response', async () => {
-        BannerModel.create.mockResolvedValue(banner);
-        res.location = jest.fn().mockImplementation(() => res);
-        await createBanner(req, res, next);
+    it('should return json body in response', () => {
         expect(res.location).toBeCalledWith(expect.any(String));
         expect(res._getData()).toStrictEqual({ message: 'ok', status: 's' });
     });
