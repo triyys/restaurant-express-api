@@ -1,5 +1,3 @@
-const express = require('express')
-const cors = require('cors')
 const path = require('path')
 
 // Module alias config
@@ -9,24 +7,11 @@ moduleAlias.addAliases({
     '@': path.join(__dirname, 'app'),
 })
 
-const route = require('@/routes')
-const { inputLogger } = require('@/middlewares')
 const ErrorHandler = require('@/common/ErrorHandler')
-const { port, cors: corsConfig } = require('./config')
+const { port } = require('./config')
 const postgres = require('@/services/postgres')
 const mongodb = require('@/services/mongodb')
-
-const app = express()
-
-// Use initial middlewares
-app.use(cors(corsConfig))
-app.use(express.static(path.join(__dirname, 'public')))
-app.use(express.urlencoded({ extended: true }))
-app.use(express.json())
-app.use(inputLogger(console))
-
-// Routes init
-route(app)
+const app = require('./app');
 
 app.listen(port, async () => {
     console.log(`Server is running on port ${port}.`)
@@ -40,5 +25,3 @@ app.listen(port, async () => {
         console.error('Failed to load app data')
     }
 })
-
-module.exports = app;
