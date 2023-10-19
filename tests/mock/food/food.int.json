@@ -1,0 +1,15 @@
+{
+    "_id": "6193cfcc3e278583b22570d0",
+    "name": "Combo 2",
+    "price": 30000,
+    "discount": "50%",
+    "imageUrls": [
+        "https://assets.grab.com/wp-content/uploads/sites/11/2020/04/03164942/111.jpg",
+        "https://cdn.tgdd.vn/2020/12/CookProduct/2-1200x676-1.jpg"
+    ],
+    "optionIds": [
+        "618eb1edc195fbd6f3cf8195"
+    ],
+    "type": "Combo",
+    "description": "Trời ơi không biết phải khách đông nên bỏ ớt lố không mà mình ăn nước mũi mồ hôi tèm lem. Takoyaki nóng hổi vừa thổi vừa hít hà vừa ăn. Ăn bột nhiều quá, như bột bánh xèo, hơi ít bạch tuộc."
+}
