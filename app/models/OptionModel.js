@@ -12,6 +12,7 @@ const option = {
             required: true,
         },
         items: [{
+            _id: false,
             name: String,
             price: Number,
         }],
