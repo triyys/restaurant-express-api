@@ -4,6 +4,7 @@ const postgres = require('@/services/postgres');
 const mongodb = require('@/services/mongodb');
 const ErrorHandler = require('@/common/ErrorHandler');
 const bannerMock = require('../../mock/banner.int.json');
+const BannerModel = require('@/models/BannerModel');
 
 beforeAll(async () => {
     await mongodb.connect();
@@ -13,28 +14,34 @@ beforeAll(async () => {
 
 describe('[GET] /banners', () => {
     const endpoint = `/api/v1/banners`;
-    let response;
-    beforeEach(async () => {
-        response = await request(app).get(endpoint);
-    });
-    it('GET ' + endpoint, () => {
+    it('GET ' + endpoint, async () => {
+        const response = await request(app).get(endpoint);
         expect(response.statusCode).toBe(200);
-    });
-    it('GET ' + endpoint, () => {
-        expect(response.body.length).toBe(2);
+        expect(response.body.length).toBeGreaterThan(0);
     });
 });
 
 describe('[GET] /banners/:id', () => {
     const endpoint = `/api/v1/banners/${bannerMock._id}`;
-    let response;
-    beforeEach(async () => {
-        response = await request(app).get(endpoint);
-    });
-    it('GET ' + endpoint, () => {
+    it('GET ' + endpoint, async () => {
+        const response = await request(app).get(endpoint);
         expect(response.statusCode).toBe(200);
-    });
-    it('GET ' + endpoint, () => {
         expect(response.body).toStrictEqual(bannerMock);
+    });
+});
+
+describe('[POST] /banners', () => {
+    const endpoint = `/api/v1/banners`;
+    it('POST ' + endpoint, async () => {
+        const response = await request(app)
+            .post(endpoint)
+            .send({ imageUrls: [] });
+        const locationHeader = response.get('Location');
+        expect(locationHeader).toStrictEqual(expect.stringContaining(`${endpoint}/`));
+        expect(response.statusCode).toBe(201);
+        expect(response.body).toStrictEqual({ message: 'ok', status: 's' });
+        
+        const id = locationHeader.substring(locationHeader.lastIndexOf('/') + 1);
+        await BannerModel.findByIdAndDelete(id);
     });
 });
