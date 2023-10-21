@@ -5,6 +5,7 @@ const mongodb = require('@/services/mongodb');
 const ErrorHandler = require('@/common/ErrorHandler');
 const foodMock = require('../../mock/food/food.int.json');
 const foodDetailMock = require('../../mock/food/foodDetail.int.json');
+const authMock = require('../../mock/auth.int.json');
 
 beforeAll(async () => {
     await mongodb.connect();
@@ -15,8 +16,7 @@ beforeAll(async () => {
 describe('[GET] /foods/:id', () => {
     const endpoint = `/api/v1/foods/${foodMock._id}`;
     it('GET ' + endpoint, async () => {
-        const response = await request(app).get(endpoint);
-        expect(response.statusCode).toBe(200);
+        const response = await request(app).get(endpoint).expect(200);
         expect(response.body).toStrictEqual(foodMock);
     });
 });
@@ -24,8 +24,7 @@ describe('[GET] /foods/:id', () => {
 describe('[GET] /foods/:id/detail', () => {
     const endpoint = `/api/v1/foods/${foodDetailMock._id}/detail`;
     it('GET ' + endpoint, async () => {
-        const response = await request(app).get(endpoint);
-        expect(response.statusCode).toBe(200);
+        const response = await request(app).get(endpoint).expect(200);
         expect(response.body).toStrictEqual(foodDetailMock);
     });
 });
@@ -33,8 +32,9 @@ describe('[GET] /foods/:id/detail', () => {
 describe('[GET] /foods/count', () => {
     const endpoint = `/api/v1/foods/count?type=Combo`;
     it('GET ' + endpoint, async () => {
-        const response = await request(app).get(endpoint);
-        expect(response.statusCode).toBe(200);
+        const response = await request(app)
+            .get(endpoint)
+            .expect(200);
         expect(response.body).toStrictEqual({ count: 12, message: 'ok', status: 's' });
     });
 });
@@ -44,8 +44,15 @@ describe('[POST] /foods', () => {
     it('POST ' + endpoint, async () => {
         const response = await request(app)
             .post(endpoint)
-            .send({});
-        expect(response.statusCode).toBe(400);
+            .set('Authorization', `Bearer ${authMock.token}`)
+            .send({})
+            .expect(400);
         expect(response.text).toBe('name is missing');
+    });
+    it('POST ' + endpoint, async () => {
+        await request(app)
+            .post(endpoint)
+            .send({})
+            .expect(401);
     });
 });

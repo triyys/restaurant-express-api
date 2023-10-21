@@ -1,0 +1,32 @@
+{
+    "_id": "632ecb9fc736b75ca8b521e1",
+    "customerInfo": {
+        "name": "Ngô Đức Trí",
+        "phone": "1234567890",
+        "address": "Nhà đá",
+        "district": "Quận 7",
+        "ward": "Phường Tân Phong",
+        "typeOrder": "Online"
+    },
+    "shipFee": 33000,
+    "status": "Đã từ chối",
+    "items": [
+        {
+            "options": "Độ cay: Cay nhẹ",
+            "name": "Combo Cá Hồi",
+            "imageUrl": "https://www.topuytin.com/wp-content/uploads/2018/05/fresh-salmon-sushi-rolls.jpg",
+            "price": 355500,
+            "quantity": 3
+        },
+        {
+            "options": "Độ cay: Cực cay",
+            "name": "Combo Bò Ngũ Vị",
+            "imageUrl": "https://haisanbaba.com/wp-content/uploads/6834b901e85d14034d4c.jpg",
+            "price": 48000,
+            "quantity": 2
+        }
+    ],
+    "createdAt": "2022-09-24T09:19:27.888Z",
+    "updatedAt": "2023-04-05T05:26:05.117Z",
+    "__v": 0
+}
