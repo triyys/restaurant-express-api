@@ -1,12 +1,18 @@
-const { Schema, SchemaTypes, connect: connectMongo, model } = require('mongoose')
+const { SchemaTypes, default: mongoose } = require('mongoose')
 const { mongodb: mongodbConfig } = require('@root/config')
 
 const connect = async () => {
     try {
-        await connectMongo(mongodbConfig.url, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-        })
+        // When strict option is set to true, Mongoose will ensure that
+        // only the fields that are specified in your Schema will be saved in the database,
+        // and all other fields will not be saved (if some other fields are sent)
+        // https://www.mongodb.com/community/forums/t/deprecationwarning-mongoose-the-strictquery/209637/2
+        await mongoose
+            .set('strictQuery', true)
+            .connect(mongodbConfig.url, {
+                useNewUrlParser: true,
+                useUnifiedTopology: true,
+            })
         console.log('MongoDB is connected successfully')
     } catch (error) {
         console.log('Cannot connect to MongoDB')
@@ -42,7 +48,7 @@ class MongoAdapter {
             }
         }
 
-        return model(modelName, new Schema(attributes, options))
+        return mongoose.model(modelName, new mongoose.Schema(attributes, options))
     }
 }
 
