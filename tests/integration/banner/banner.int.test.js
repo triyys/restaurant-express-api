@@ -3,7 +3,6 @@ const app = require('@root/app');
 const postgres = require('@/services/postgres');
 const mongodb = require('@/services/mongodb');
 const ErrorHandler = require('@/common/ErrorHandler');
-const bannerMock = require('../../mock/banner.int.json');
 const authMock = require('../../mock/auth.int.json');
 const BannerModel = require('@/models/BannerModel');
 
@@ -17,15 +16,15 @@ describe('[GET] /banners', () => {
     const endpoint = `/api/v1/banners`;
     it('GET ' + endpoint, async () => {
         const response = await request(app).get(endpoint).expect(200);
-        expect(response.body.length).toBeGreaterThan(0);
+        expect(response.body).toMatchBanner([]);
     });
 });
 
 describe('[GET] /banners/:id', () => {
-    const endpoint = `/api/v1/banners/${bannerMock._id}`;
+    const endpoint = `/api/v1/banners/6295cbad858cfee60cd82d11`;
     it('GET ' + endpoint, async () => {
         const response = await request(app).get(endpoint).expect(200);
-        expect(response.body).toStrictEqual(bannerMock);
+        expect(response.body).toMatchBanner({});
     });
 });
 
@@ -39,7 +38,7 @@ describe('[POST] /banners', () => {
             .expect(201);
         const locationHeader = response.get('Location');
         expect(locationHeader).toStrictEqual(expect.stringContaining(`${endpoint}/`));
-        expect(response.body).toStrictEqual({ message: 'ok', status: 's' });
+        expect(response.body).toMatchResponse({});
         
         const id = locationHeader.substring(locationHeader.lastIndexOf('/') + 1);
         await BannerModel.findByIdAndDelete(id);

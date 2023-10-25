@@ -29,6 +29,6 @@ describe('createBanner Controller Test', () => {
     });
     it('should return json body in response', () => {
         expect(res.location).toBeCalledWith(expect.any(String));
-        expect(res._getData()).toStrictEqual({ message: 'ok', status: 's' });
+        expect(res._getData()).toMatchResponse({});
     });
 });

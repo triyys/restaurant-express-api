@@ -47,7 +47,7 @@ describe('createFood Controller Test', () => {
         expect(res.location).toBeCalledWith(expect.any(String));
     });
     it('should return json body success', () => {
-        expect(res._getData()).toStrictEqual({ message: 'ok', status: 's' });
+        expect(res._getData()).toMatchResponse({});
     });
 });
 

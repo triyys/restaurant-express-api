@@ -4,4 +4,5 @@ module.exports = {
         "@root/(.*)$": "<rootDir>/$1",
     },
     verbose: true,
+    setupFilesAfterEnv: ['<rootDir>/tests/matchers/initMatchers.js'],
 };

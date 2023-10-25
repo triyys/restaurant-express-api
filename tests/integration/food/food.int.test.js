@@ -3,8 +3,6 @@ const app = require('@root/app');
 const postgres = require('@/services/postgres');
 const mongodb = require('@/services/mongodb');
 const ErrorHandler = require('@/common/ErrorHandler');
-const foodMock = require('../../mock/food/food.int.json');
-const foodDetailMock = require('../../mock/food/foodDetail.int.json');
 const authMock = require('../../mock/auth.int.json');
 
 beforeAll(async () => {
@@ -14,18 +12,18 @@ beforeAll(async () => {
 });
 
 describe('[GET] /foods/:id', () => {
-    const endpoint = `/api/v1/foods/${foodMock._id}`;
+    const endpoint = `/api/v1/foods/6193cfcc3e278583b22570d0`;
     it('GET ' + endpoint, async () => {
         const response = await request(app).get(endpoint).expect(200);
-        expect(response.body).toStrictEqual(foodMock);
+        expect(response.body).toMatchFood({});
     });
 });
 
 describe('[GET] /foods/:id/detail', () => {
-    const endpoint = `/api/v1/foods/${foodDetailMock._id}/detail`;
+    const endpoint = `/api/v1/foods/6193cfcc3e278583b22570d0/detail`;
     it('GET ' + endpoint, async () => {
         const response = await request(app).get(endpoint).expect(200);
-        expect(response.body).toStrictEqual(foodDetailMock);
+        expect(response.body).toMatchFoodDetail({});
     });
 });
 
