@@ -1,4 +1,4 @@
-const { Model } = require("mongoose")
+const { Model } = require('mongoose');
 
 /**
  * An RESTful API action to handle GET all resources method
@@ -6,11 +6,12 @@ const { Model } = require("mongoose")
  * @returns A callback function
  */
 const getMongoCollection = (model) => (req, res, next) => {
-    return model.find()
-        .then((collection) => {
-            return res.status(200).send(collection)
-        })
-        .catch(next)
-}
+  return model
+    .find()
+    .then((collection) => {
+      return res.status(200).send(collection);
+    })
+    .catch(next);
+};
 
-module.exports = getMongoCollection
+module.exports = getMongoCollection;

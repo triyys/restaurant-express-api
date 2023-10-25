@@ -1,8 +1,8 @@
-const express = require('express')
-const router = express.Router()
+const express = require('express');
+const router = express.Router();
 
-const { exchangeCodeForToken } = require('@/controllers/redirect')
+const { exchangeCodeForToken } = require('@/controllers/redirect');
 
-router.get('/', exchangeCodeForToken)
+router.get('/', exchangeCodeForToken);
 
-module.exports = router
+module.exports = router;

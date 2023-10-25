@@ -1,12 +1,12 @@
 class ModelClient {
-    #ModelRepository
-    constructor(modelRepository) {
-        this.#ModelRepository = modelRepository
-    }
+  #ModelRepository;
+  constructor(modelRepository) {
+    this.#ModelRepository = modelRepository;
+  }
 
-    createModel(config) {
-        return this.#ModelRepository.getModel(config)
-    }
+  createModel(config) {
+    return this.#ModelRepository.getModel(config);
+  }
 }
 
-module.exports = ModelClient
+module.exports = ModelClient;

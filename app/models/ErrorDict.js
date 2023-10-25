@@ -1,24 +1,24 @@
-const postgresModelClient = require('@/services/postgresModelClient')
+const postgresModelClient = require('@/services/postgresModelClient');
 
 const errorDict = {
-    modelName: 'errordict',
-    attributes: {
-        code: {
-            type: 'string',
-            primaryKey: true,
-            allowNull: false,
-        },
-        vi: {
-            type: 'string',
-        },
-        en: {
-            type: 'string',
-        }
+  modelName: 'errordict',
+  attributes: {
+    code: {
+      type: 'string',
+      primaryKey: true,
+      allowNull: false,
     },
-    options: {
-        freezeTableName: true,
-        timestamps: false,
+    vi: {
+      type: 'string',
     },
-}
+    en: {
+      type: 'string',
+    },
+  },
+  options: {
+    freezeTableName: true,
+    timestamps: false,
+  },
+};
 
-module.exports = postgresModelClient.createModel(errorDict)
+module.exports = postgresModelClient.createModel(errorDict);

@@ -1,16 +1,15 @@
-
-const mongoModelClient = require('@/services/mongoModelClient')
+const mongoModelClient = require('@/services/mongoModelClient');
 
 const banner = {
-    modelName: 'banners',
-    attributes: {
-        imageUrls: {
-            type: '[string]',
-        },
+  modelName: 'banners',
+  attributes: {
+    imageUrls: {
+      type: '[string]',
     },
-    options: {
-        timestamps: true,
-    },
-}
+  },
+  options: {
+    timestamps: true,
+  },
+};
 
-module.exports = mongoModelClient.createModel(banner)
+module.exports = mongoModelClient.createModel(banner);

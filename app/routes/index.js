@@ -1,18 +1,18 @@
-const redirect = require('./redirect')
-const v1 = require('./v1')
+const redirect = require('./redirect');
+const v1 = require('./v1');
 
 function route(app) {
-    app.use('/redirect', redirect)
-    app.use('/api/v1', v1)
+  app.use('/redirect', redirect);
+  app.use('/api/v1', v1);
 
-    // Api documents
-    app.use('/api/docs/swagger', (req, res) => res.redirect('/swagger'))
+  // Api documents
+  app.use('/api/docs/swagger', (req, res) => res.redirect('/swagger'));
 
-    // Default error handler
-    app.use((error, req, res, next) => {
-        console.log(`Caught the error: ${error}`)
-        return res.status(500).send(error.toString())
-    })
+  // Default error handler
+  app.use((error, req, res, next) => {
+    console.log(`Caught the error: ${error}`);
+    return res.status(500).send(error.toString());
+  });
 }
 
-module.exports = route
+module.exports = route;

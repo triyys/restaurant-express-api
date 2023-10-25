@@ -1,7 +1,7 @@
-const success = require('./success')
-const failure = require('./failure')
+const success = require('./success');
+const failure = require('./failure');
 
 module.exports = {
-    success,
-    failure,
-}
+  success,
+  failure,
+};

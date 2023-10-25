@@ -1,26 +1,26 @@
-const mongoModelClient = require('@/services/mongoModelClient')
+const mongoModelClient = require('@/services/mongoModelClient');
 
 const order = {
-    modelName: 'orders',
-    attributes: {
-        customerInfo: 'ref',
-        shipFee: {
-            type: 'number',
-            required: true,
-        },
-        status: {
-            type: 'string',
-            default: 'Đang chờ xử lý',
-        },
-        items: {
-            type: '[ref]',
-            required: true,
-        },
+  modelName: 'orders',
+  attributes: {
+    customerInfo: 'ref',
+    shipFee: {
+      type: 'number',
+      required: true,
     },
-    options: {
-        timestamps: true,
+    status: {
+      type: 'string',
+      default: 'Đang chờ xử lý',
     },
-}
+    items: {
+      type: '[ref]',
+      required: true,
+    },
+  },
+  options: {
+    timestamps: true,
+  },
+};
 
 // const Order = new Schema({
 //     customerInfo: {
@@ -29,7 +29,7 @@ const order = {
 //         phone: String,
 //         district: String,
 //         ward: String,
-//         typeOrder: String, 
+//         typeOrder: String,
 //     },
 //     shipFee: Number,
 //     status: { type : String, default : 'Đang chờ xử lý'},
@@ -48,4 +48,4 @@ const order = {
 //     }
 // })
 
-module.exports = mongoModelClient.createModel(order)
+module.exports = mongoModelClient.createModel(order);
