@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const { createOrder, updateStatus, getAllOrder, getOrderById, updateStatusAll } = require('@/controllers/order');
-const { validateRequestBody } = require('@/middlewares');
+const { validateRequestBody, verifyAccessToken } = require('@/middlewares');
 
-router.post('/status', validateRequestBody(['selectedStatus', 'newStatus']), updateStatusAll);
+router.post('/status', verifyAccessToken, validateRequestBody(['selectedStatus', 'newStatus']), updateStatusAll);
 
-router.get('/', getAllOrder);
-router.get('/:id', getOrderById);
+router.get('/', verifyAccessToken, getAllOrder);
+router.get('/:id', verifyAccessToken, getOrderById);
 router.post('/', createOrder);
-router.patch('/:id', validateRequestBody(['status']), updateStatus);
+router.patch('/:id', verifyAccessToken, validateRequestBody(['status']), updateStatus);
 
 module.exports = router;
